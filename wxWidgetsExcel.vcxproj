@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="wxExcel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="wxExcel.cpp" />
   </ItemGroup>

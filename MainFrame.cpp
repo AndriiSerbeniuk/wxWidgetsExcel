@@ -2,6 +2,7 @@
 
 MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 {
+	_file_path.clear();
 	SetSize(wxSize(1280, 720));
 
 	_mitem_new = new wxMenuItem(_menu_file, idMItemNew, 
@@ -40,20 +41,20 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	_sizer_textctrls->Add(_txt_function, 30, wxCENTER | wxALL, 2);
 
 	_grid = new InfiniteGrid(this, idGrid);
-	_grid->CreateGrid(50, 100);
 	_grid->SetGridLineColour(wxColour(0, 0, 0));
 	
 	_sizer_main = new wxBoxSizer(wxVERTICAL);
-	_sizer_main->Add(_sizer_textctrls);
-	_sizer_main->Add(_grid);
+	_sizer_main->Add(_sizer_textctrls, 1, wxEXPAND);
+	_sizer_main->Add(_grid, 100, wxEXPAND);
 
 	_panel_main = new wxPanel(this, idPanelMain);
 	_panel_main->SetSizer(_sizer_main);
 	_panel_main->SetBackgroundColour(wxColour("Light gray"));
 
 	_sizer_panel = new wxBoxSizer(wxHORIZONTAL);
-	_sizer_panel->Add(_panel_main);
+	_sizer_panel->Add(_panel_main, wxEXPAND);
 	SetSizer(_sizer_panel);
+	_grid->ResizeData();
 }
 
 MainFrame::~MainFrame()
@@ -73,72 +74,113 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 	EVT_TEXT_ENTER(idTxtFunction, _on_func_txt_enter)
 	EVT_GRID_CMD_CELL_CHANGED(idGrid, _on_grid_cell_enter)
 	EVT_CLOSE(_on_close)
+	EVT_GRID_CMD_SELECT_CELL(idGrid, _on_cell_selected)
 wxEND_EVENT_TABLE()
 
-void MainFrame::_on_new_press(wxCommandEvent& e)
+void MainFrame::_on_new_press(wxCommandEvent& e)	// TODO
 {
-	_txt_function->AppendText("New ");
+	_grid->ClearGrid();
+	// TODO: make the grid resize itself here
 	e.Skip();
 }
 
-void MainFrame::_on_open_press(wxCommandEvent& e)
+void MainFrame::_on_open_press(wxCommandEvent& e)	// TODO
 {
-	_txt_function->AppendText("Open ");
+	// open a dialog
+
+	// load the file
+	// _file_path = path
+
 	e.Skip();
 }
 
-void MainFrame::_on_save_press(wxCommandEvent& e)
+void MainFrame::_on_save_press(wxCommandEvent& e)	// TODO
 {
-	_txt_function->AppendText("Save ");
+	if (!_file_path.empty())
+	{
+		// save to path
+	}
+	else
+	{
+		// open a dialog
+		
+		// save to path
+	}
+
+
 	e.Skip();
 }
 
-void MainFrame::_on_save_as_press(wxCommandEvent& e)
+void MainFrame::_on_save_as_press(wxCommandEvent& e)	// TODO
 {
-	_txt_function->AppendText("SaveAs ");
+	// open a dialog
+
+	// save to path
+
 	e.Skip();
 }
 
 void MainFrame::_on_quit_press(wxCommandEvent& e)
 {
-	_txt_function->AppendText("Quit ");
+	Close();
 	e.Skip();
 }
 
-void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)
+void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
 {
-	_txt_function->AppendText("CEnt ");
-	this->SetFocus();
+	// decode the the text with lexical analyzer
+
+	this->SetFocus();	// unfocus the control
 	e.Skip();
 }
 
-void MainFrame::_on_func_help_press(wxCommandEvent& e)
+void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
 {
-	_txt_function->AppendText("Help ");
+	// Open a frame with help, main frame shoould still be interactable
 	e.Skip();
 }
 
-void MainFrame::_on_func_txt_changed(wxCommandEvent& e)
+void MainFrame::_on_func_txt_changed(wxCommandEvent& e)	// TODO
 {
-	_grid->SetCellValue(0, 0, std::string(_grid->GetCellValue(0, 0) + "FC "));
+	_grid->SetCellValue(_grid->GetSelectedCell(), _txt_function->GetValue());
 	e.Skip();
 }
 
-void MainFrame::_on_func_txt_enter(wxCommandEvent& e)
+void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO
 {
-	_grid->SetCellValue(0, 0, std::string(_grid->GetCellValue(0, 0) + "FE "));
-	this->SetFocus();
+	// start function parse and calculation
+
+	this->SetFocus();	// unfocus the control
 	e.Skip();
 }
 
-void MainFrame::_on_grid_cell_enter(wxGridEvent& e)
+void MainFrame::_on_grid_cell_enter(wxGridEvent& e)	// TODO
 {
-	_txt_function->AppendText("CellE ");
+	//std::string s (_grid->GetCellValue(e.GetRow(), e.GetCol()).c_str().AsChar());
+	_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
+	// start function parse and calculation
 	e.Skip();
 }
 
-void MainFrame::_on_close(wxCloseEvent& e)
+void MainFrame::_on_close(wxCloseEvent& e)	// TODO
 {
 	// TODO: if the file is not saved ask the user if he's sure
 	Destroy();
+}
+
+void MainFrame::_on_cell_selected(wxGridEvent& e)
+{
+	_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
+	_grid->SelectCell(wxGridCellCoords(e.GetRow(), e.GetCol()));
+	e.Skip();
+}
+
+wxString MainFrame::_dialog_open()	// TODO
+{
+	return wxString();
+}
+
+wxString MainFrame::_dialog_save()	// TODO
+{
+	return wxString();
 }

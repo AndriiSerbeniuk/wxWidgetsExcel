@@ -25,6 +25,8 @@ private:
 		idMItemQuit
 	};
 
+	std::string _file_path;	// TODO: shove this into some other specialised class
+
 	wxPanel* _panel_main;
 	wxMenuBar* _menubar;
 	wxTextCtrl* _txt_cell;
@@ -58,5 +60,10 @@ private:
 	void _on_func_txt_enter(wxCommandEvent& e);
 	void _on_grid_cell_enter(wxGridEvent& e);
 	void _on_close(wxCloseEvent& e);
+	void _on_cell_selected(wxGridEvent& e);
+
+	// Utility functions
+	wxString _dialog_open();
+	wxString _dialog_save();
 };
 

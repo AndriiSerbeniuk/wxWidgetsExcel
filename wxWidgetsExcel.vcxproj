@@ -19,12 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ExprCell.h" />
+    <ClInclude Include="ExprNumber.h" />
     <ClInclude Include="InfiniteGrid.h" />
+    <ClInclude Include="LexemParser.h" />
+    <ClInclude Include="Lexem.h" />
+    <ClInclude Include="LiteralsContainer.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="wxExcel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExprCell.cpp" />
+    <ClCompile Include="ExprNumber.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
+    <ClCompile Include="LexemParser.cpp" />
+    <ClCompile Include="Lexem.cpp" />
+    <ClCompile Include="LiteralsContainer.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="wxExcel.cpp" />
   </ItemGroup>

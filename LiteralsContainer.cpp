@@ -4,4 +4,5 @@ void LiteralsContainer::Clear()
 {
 	Nums.clear();
 	Cells.clear();
+	Selections.clear();
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 // Types of lexems
-enum eLexemType { kAny = -2, kError, kFunction, kDivider, kNumber, kCell, kOperation };
+enum eLexemType { kAny = -2, kError, kFunction, kDivider, kNumber, kCell, kCellSelection, kOperation };
 // Kinds of function names
 enum eFunction { kSum, kSqrt, kPow, kAvg, kMin, kMax };
 // Kinds of dividers
@@ -29,6 +29,7 @@ public:
 	static const Lexem kLexAny;
 	static const Lexem kLexNum;
 	static const Lexem kLexCell;
+	static const Lexem kLexCellSelection;
 
 	// Functions
 

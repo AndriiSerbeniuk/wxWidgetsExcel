@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ExprCell.h" />
+    <ClInclude Include="ExprCellSelection.h" />
     <ClInclude Include="ExprNumber.h" />
     <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="LexemParser.h" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExprCell.cpp" />
+    <ClCompile Include="ExprCellSelection.cpp" />
     <ClCompile Include="ExprNumber.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="LexemParser.cpp" />

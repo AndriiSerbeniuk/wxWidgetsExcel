@@ -18,6 +18,16 @@ ExprCell::ExprCell(const std::string& row, const std::string& col)
 
 }
 
+int ExprCell::GetRow() const
+{
+	return _row;
+}
+
+int ExprCell::GetColumn() const
+{
+	return _column;
+}
+
 int ExprCell::_parse_col_id(const std::string& text)	
 {
 	// Column ID is a series of letters that represent a number in base-26 numeral system

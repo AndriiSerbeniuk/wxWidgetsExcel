@@ -6,6 +6,9 @@ class ExprCell
 public:
 	ExprCell(const std::string& row, const std::string& col);
 
+	int GetRow() const;
+	int GetColumn() const;
+
 private:
 	// Number of leters in the alphabet. Used for column ID parsing
 	const static int kNumBase;

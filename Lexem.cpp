@@ -4,6 +4,7 @@ const Lexem Lexem::kLexError{ kError, -1 };
 const Lexem Lexem::kLexAny{ kAny, -1 };
 const Lexem Lexem::kLexNum{ kNumber, -1 };
 const Lexem Lexem::kLexCell{ kCell, -1 };
+const Lexem Lexem::kLexCellSelection{ kCellSelection, -1 };
 // Functions
 const Lexem Lexem::kLexSum{ kFunction, kSum };
 const Lexem Lexem::kLexSqrt{ kFunction, kSqrt };
@@ -23,8 +24,8 @@ const Lexem Lexem::kLexMultiply{ kOperation, kMultiply };
 const Lexem Lexem::kLexDivide{ kOperation, kDivide };
 
 const std::map<eLexemType, const Lexem&> Lexem::_type_lexems{
-	{ kError, kLexError }, { kAny, kLexAny },
-	{ kNumber, kLexNum }, { kCell, kLexCell }
+	{ kError, kLexError }, { kAny, kLexAny }, { kNumber, kLexNum },
+	{ kCell, kLexCell }, { kCellSelection, kLexCellSelection }
 };
 
 const std::map<eFunction, const Lexem&> Lexem::_functions{
@@ -88,11 +89,16 @@ Lexem Lexem::GetLexem(int lexem)
 bool Lexem::operator==(Lexem other)
 {
 	// For literals only their types are checked
-	if (Type == kNumber || Type == kCell
-		|| other.Type == kNumber || other.Type == kCell)
+	/*if (Type == kNumber || Type == kCell || Type == kCellSelection
+		|| other.Type == kNumber || other.Type == kCell
+		|| other.Type == kCellSelection)
 		return Type == other.Type;
 	else
-		return Type == other.Type && Value == other.Value;
+		return Type == other.Type && Value == other.Value;*/
+	return Type == kNumber && other.Type == kNumber ||
+		Type == kCell && other.Type == kCell ||
+		Type == kCellSelection && other.Type == kCellSelection ||
+		Type == other.Type && Value == other.Value;
 }
 
 bool Lexem::operator!=(Lexem other)

@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
-#include <list>
 #include <vector>
+#include <list>
 #include "LiteralsContainer.h"
 #include <memory>
 #include "Lexem.h"
 
-// Extracts lexems from the given text and adds them to a list
+// Extracts lexems from the given text and adds them to a vector
 class LexemParser
 {
 public:
@@ -30,7 +30,7 @@ private:
 	std::string _raw;
 	// Extracted lexems
 	std::list<Lexem> _parsed;
-	// Container for extracted numbers and cell IDs
+	// Container for extracted numbers, cell IDs, and cell selections
 	std::shared_ptr<LiteralsContainer> _literals;
 	// Finite-state machine used to identify func names, dividers, and operations
 	static const std::vector<LexState> _states_graph;
@@ -55,5 +55,7 @@ private:
 	Lexem _extract_number(const char*& text);
 	// Extracts cell ID from text and adds it to the literals
 	Lexem _extract_cell_id(const char*& text);
+	// Forms cell:cell series into kCellSelection lexems
+	void _form_cell_selections();
 };
 

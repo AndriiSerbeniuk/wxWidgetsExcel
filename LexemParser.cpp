@@ -112,6 +112,7 @@ void LexemParser::_parse()
 		curLexem.EndInd = lexEnd;
 		_parsed.push_back(curLexem);
 	}
+	_form_cell_selections();
 }
 
 int LexemParser::_run_graph(const char*& startChar, int startState)
@@ -153,7 +154,7 @@ Lexem LexemParser::_extract_number(const char*& text)
 	if (*text == '.')	// If there's a decimal part present
 	{
 		number.append(text, 1);
-		nSize == 0;
+		nSize = 0;
 		text++;
 		temp = text;
 		while (isdigit(*text))
@@ -207,5 +208,31 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 	_literals->Cells.push_back({ rowPart, colPart });
 	// Lexem value contains cell's index in the literals vector
 	return Lexem({ kCell, static_cast<int>(_literals->Cells.size() - 1) });
+}
+
+void LexemParser::_form_cell_selections()
+{
+	// Look for Cell1 Semicolon Cell2 series
+	std::list<Lexem>::iterator next = _parsed.begin(), prev = next++, curr = next++;	// Need access to all three lexems at once
+	// Initial position of "next" is where prev should point
+	while (next != _parsed.end())
+	{
+		if (*curr == Lexem::kLexColon && *prev == Lexem::kLexCell && *next == Lexem::kLexCell)
+		{
+			ExprCell& c1 = _literals->Cells[prev->Value];
+			ExprCell& c2 = _literals->Cells[next->Value];
+			_literals->Selections.push_back({ c1.GetRow(), c1.GetColumn(), c2.GetRow(), c2.GetColumn() });
+			// Insert selection lexem before first cell lexem
+			_parsed.insert(prev, Lexem({ kCellSelection, static_cast<int>(_literals->Selections.size() - 1) }));
+			// Erase cell:cell. Next point to the lexem after selection
+			next = _parsed.erase(prev, ++next);
+		}
+		else
+		{
+			next = curr;
+		}
+		prev = next++;	// next points at curr now
+		curr = next++;	// everyone point where they should
+	}
 }
 

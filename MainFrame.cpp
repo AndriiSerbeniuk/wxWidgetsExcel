@@ -137,8 +137,7 @@ void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
 void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
 {
 	// this will house testing code for now
-	LexemParser lp("= .5 ax");
-	
+	LexemParser lp("= a1:b2  5  c3:20");
 
 	// =======
 	// Open a frame with help, main frame shoould still be interactable

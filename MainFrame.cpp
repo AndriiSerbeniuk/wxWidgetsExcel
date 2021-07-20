@@ -136,10 +136,14 @@ void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
 
 void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
 {
-	// this will house testing code for now
-	LexemParser lp("= a1:b2  5  c3:20");
+	// testing code
+	LexemParser lp("=pow(30)");
+	bool correct = GrammarChecker::Run(lp.GetParsed());
 
-	// =======
+	lp.SetText("=avg(A1:C5; sum(10; -5))");
+	correct = GrammarChecker::Run(lp.GetParsed());
+
+	//=====
 	// Open a frame with help, main frame shoould still be interactable
 	e.Skip();
 }
@@ -152,6 +156,10 @@ void MainFrame::_on_func_txt_changed(wxCommandEvent& e)	// TODO
 
 void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO
 {
+	// testing code
+	LexemParser lp(e.GetString().ToStdString());
+	bool correct = GrammarChecker::Run(lp.GetParsed());
+	//=====
 	// start function parse and calculation
 
 	this->SetFocus();	// unfocus the control
@@ -160,7 +168,6 @@ void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO
 
 void MainFrame::_on_grid_cell_enter(wxGridEvent& e)	// TODO
 {
-	//std::string s (_grid->GetCellValue(e.GetRow(), e.GetCol()).c_str().AsChar());
 	_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
 	// start function parse and calculation
 	e.Skip();

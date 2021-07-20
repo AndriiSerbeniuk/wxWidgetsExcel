@@ -8,17 +8,17 @@ const std::vector<LexemParser::LexState> LexemParser::_states_graph = std::vecto
 	{ '(', { } }, { ')', { } }, { ';', { } }, { ':', { } },	// 8
 	// Keywords
 	// sqrt
-	{ 's', { 10, 13 } }, { 'q', { 11 } }, { 'r', { 12 } }, { 't', { } }, // 12
+	{ 'S', { 10, 13 } }, { 'Q', { 11 } }, { 'R', { 12 } }, { 'T', { } }, // 12
 	// sum
-	{ 'u', { 14 } }, { 'm', { } }, // 14
+	{ 'U', { 14 } }, { 'M', { } }, // 14
 	// avg
-	{ 'a', { 16 } }, { 'v', { 17 } }, { 'g', { } },	// 17
+	{ 'A', { 16 } }, { 'V', { 17 } }, { 'G', { } },	// 17
 	// min
-	{ 'm', { 19, 21 } }, { 'i', { 20 } }, { 'n', { } },	// 20
+	{ 'M', { 19, 21 } }, { 'I', { 20 } }, { 'N', { } },	// 20
 	// max
-	{ 'a', { 22 } }, { 'x', { } }, // 22
+	{ 'A', { 22 } }, { 'X', { } }, // 22
 	// pow
-	{ 'p', { 24 } }, { 'o', { 25 } }, { 'w', { } } // 25
+	{ 'P', { 24 } }, { 'O', { 25 } }, { 'W', { } } // 25
 	});
 
 const std::map<int, eFunction> LexemParser::_func_keys{
@@ -41,6 +41,12 @@ LexemParser::LexemParser(std::string text) : _parsed(), _literals(new LiteralsCo
 void LexemParser::SetText(std::string text)
 {
 	_raw = text;
+	for (auto i = _raw.begin(); i != _raw.end(); i++)
+	{
+		*i = std::toupper(*i);
+	}
+	_literals->Clear();
+	_parsed.clear();
 	_parse();
 }
 
@@ -102,7 +108,7 @@ void LexemParser::_parse()
 			else
 			{
 				// It's an error otherwise
-				curLexem = Lexem::kLexError;
+				curLexem = Lexem::LErr;
 				text++;	// Increment here because graph check doesn't skip unknown symbols
 				// All other cases skip to the next symbol automatically
 			}		
@@ -163,7 +169,7 @@ Lexem LexemParser::_extract_number(const char*& text)
 			text++;
 		}
 		if (!nSize)
-			return Lexem(Lexem::kLexError);	// Decimal part must be specified
+			return Lexem(Lexem::LErr);	// Decimal part must be specified
 		number.append(temp, nSize);
 	}
 	// Adding it to the literals creates ExprNumber object that parses the number
@@ -184,13 +190,9 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 	}
 	if (!nSize)
 	{
-		return Lexem(Lexem::kLexError);
+		return Lexem(Lexem::LErr);
 	}
 	colPart.append(temp, nSize);
-	for (auto i = colPart.begin(); i != colPart.end(); i++)
-	{
-		*i = std::toupper(*i);
-	}
 	nSize = 0;
 	temp = text;
 	std::string rowPart("");
@@ -201,7 +203,7 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 	}
 	if (!nSize)
 	{
-		return Lexem(Lexem::kLexError);	// Both row and column must be specified
+		return Lexem(Lexem::LErr);	// Both row and column must be specified
 	}
 	rowPart.append(temp, nSize);
 	// Adding it to the literals creates ExprCell object that parses the row and col values
@@ -212,12 +214,14 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 
 void LexemParser::_form_cell_selections()
 {
+	if (_parsed.size() < 3)
+		return;
 	// Look for Cell1 Semicolon Cell2 series
 	std::list<Lexem>::iterator next = _parsed.begin(), prev = next++, curr = next++;	// Need access to all three lexems at once
 	// Initial position of "next" is where prev should point
 	while (next != _parsed.end())
 	{
-		if (*curr == Lexem::kLexColon && *prev == Lexem::kLexCell && *next == Lexem::kLexCell)
+		if (*curr == Lexem::LColon && *prev == Lexem::LCell && *next == Lexem::LCell)
 		{
 			ExprCell& c1 = _literals->Cells[prev->Value];
 			ExprCell& c2 = _literals->Cells[next->Value];
@@ -231,8 +235,10 @@ void LexemParser::_form_cell_selections()
 		{
 			next = curr;
 		}
-		prev = next++;	// next points at curr now
-		curr = next++;	// everyone point where they should
+		if (next != _parsed.end())
+			prev = next++;	// next points at curr now
+		if (next != _parsed.end())
+			curr = next++;	// everyone point where they should
 	}
 }
 

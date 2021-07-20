@@ -22,6 +22,7 @@
     <ClInclude Include="ExprCell.h" />
     <ClInclude Include="ExprCellSelection.h" />
     <ClInclude Include="ExprNumber.h" />
+    <ClInclude Include="GrammarChecker.h" />
     <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="LexemParser.h" />
     <ClInclude Include="Lexem.h" />
@@ -33,9 +34,11 @@
     <ClCompile Include="ExprCell.cpp" />
     <ClCompile Include="ExprCellSelection.cpp" />
     <ClCompile Include="ExprNumber.cpp" />
+    <ClCompile Include="GrammarChecker.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="LexemParser.cpp" />
     <ClCompile Include="Lexem.cpp" />
+    <ClCompile Include="LexParsingConsts.cpp" />
     <ClCompile Include="LiteralsContainer.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="wxExcel.cpp" />

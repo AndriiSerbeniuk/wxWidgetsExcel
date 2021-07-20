@@ -17,42 +17,41 @@ public:
 	eLexemType Type;
 	// It's value in the type
 	int Value;
-	int StartInd;	// dunno 'bout this one
-	int EndInd;		// and this one
-
-	Lexem();
-	Lexem(eLexemType type, int value);
+	// Starting index of the lexem in the string. [StartInd;EndInd)
+	int StartInd;
+	// Index after the end index of the lexem in the string. [StartInd;EndInd)
+	int EndInd;
 
 	// Lexem consts
 
-	static const Lexem kLexError;
-	static const Lexem kLexAny;
-	static const Lexem kLexNum;
-	static const Lexem kLexCell;
-	static const Lexem kLexCellSelection;
+	static const Lexem LErr;	// Error
+	static const Lexem LAny;	// Equal to any other lexem, to error too
+	static const Lexem LNum;
+	static const Lexem LCell;
+	static const Lexem LCellSelection;
 
 	// Functions
 
-	static const Lexem kLexSum;
-	static const Lexem kLexSqrt;
-	static const Lexem kLexPow;
-	static const Lexem kLexAvg;
-	static const Lexem kLexMin;
-	static const Lexem kLexMax;
+	static const Lexem LSum;
+	static const Lexem LSqrt;
+	static const Lexem LPow;
+	static const Lexem LAvg;
+	static const Lexem LMin;
+	static const Lexem LMax;
 
 	// Dividers
 
-	static const Lexem kLexSemicolon;
-	static const Lexem kLexColon;
-	static const Lexem kLexRoundOpen;
-	static const Lexem kLexRoundClosed;
+	static const Lexem LSemicolon;
+	static const Lexem LColon;
+	static const Lexem LRoundOpen;
+	static const Lexem LRoundClosed;
 
 	// Operations
 
-	static const Lexem kLexPlus;
-	static const Lexem kLexMinus;
-	static const Lexem kLexMultiply;
-	static const Lexem kLexDivide;
+	static const Lexem LPlus;
+	static const Lexem LMinus;
+	static const Lexem LMultiply;
+	static const Lexem LDivide;
 
 	// Returns a const Lexem based on its type
 	static Lexem GetLexem(eLexemType type);
@@ -65,8 +64,14 @@ public:
 	// Returns a const Lexem based on its kind. This one is used for dividers and operations combined
 	static Lexem GetLexem(int lexem);
 
-	bool operator == (Lexem other);
-	bool operator != (Lexem other);
+	Lexem();
+	Lexem(eLexemType type, int value);
+	Lexem(const Lexem& other);
+
+	
+
+	bool operator == (const Lexem& other);
+	bool operator != (const Lexem& other);
 private:
 	// Blank lexems of some types
 	static const std::map<eLexemType, const Lexem&> _type_lexems;
@@ -76,3 +81,4 @@ private:
 	static const std::map<int, const Lexem&> _single_sym_lexems;
 };
 
+bool operator == (const Lexem& l1, const Lexem& l2);

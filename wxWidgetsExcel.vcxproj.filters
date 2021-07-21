@@ -45,6 +45,12 @@
     <ClInclude Include="GrammarChecker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExpressionBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Expression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wxExcel.cpp">
@@ -78,6 +84,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LexParsingConsts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressionBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Expression.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

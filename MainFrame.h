@@ -2,8 +2,7 @@
 #include "wx\wx.h"
 #include "wx\grid.h"
 #include "InfiniteGrid.h"
-#include "LexemParser.h"	// remove later
-#include "GrammarChecker.h"	// this one too
+
 
 class MainFrame : public wxFrame
 {

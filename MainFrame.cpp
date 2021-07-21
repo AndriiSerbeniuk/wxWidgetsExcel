@@ -137,11 +137,7 @@ void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
 void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
 {
 	// testing code
-	LexemParser lp("=pow(30)");
-	bool correct = GrammarChecker::Run(lp.GetParsed());
-
-	lp.SetText("=avg(A1:C5; sum(10; -5))");
-	correct = GrammarChecker::Run(lp.GetParsed());
+	
 
 	//=====
 	// Open a frame with help, main frame shoould still be interactable
@@ -157,8 +153,8 @@ void MainFrame::_on_func_txt_changed(wxCommandEvent& e)	// TODO
 void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO
 {
 	// testing code
-	LexemParser lp(e.GetString().ToStdString());
-	bool correct = GrammarChecker::Run(lp.GetParsed());
+	/*LexemParser lp(e.GetString().ToStdString());
+	bool correct = GrammarChecker::Run(lp.GetParsed());*/
 	//=====
 	// start function parse and calculation
 

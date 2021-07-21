@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="ExprCell.h" />
     <ClInclude Include="ExprCellSelection.h" />
+    <ClInclude Include="Expression.h" />
+    <ClInclude Include="ExpressionBase.h" />
     <ClInclude Include="ExprNumber.h" />
     <ClInclude Include="GrammarChecker.h" />
     <ClInclude Include="InfiniteGrid.h" />
@@ -33,6 +35,8 @@
   <ItemGroup>
     <ClCompile Include="ExprCell.cpp" />
     <ClCompile Include="ExprCellSelection.cpp" />
+    <ClCompile Include="Expression.cpp" />
+    <ClCompile Include="ExpressionBase.cpp" />
     <ClCompile Include="ExprNumber.cpp" />
     <ClCompile Include="GrammarChecker.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
@@ -111,7 +115,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\wxWidgets\wxWidgets-3.1.5\include\msvc;D:\wxWidgets\wxWidgets-3.1.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -127,7 +131,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\wxWidgets\wxWidgets-3.1.5\include\msvc;D:\wxWidgets\wxWidgets-3.1.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

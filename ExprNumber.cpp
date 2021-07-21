@@ -11,3 +11,8 @@ ExprNumber::ExprNumber(const std::string& text)
 		_value = 0;
 	}
 }
+
+double ExprNumber::Calculate()
+{
+	return _value;
+}

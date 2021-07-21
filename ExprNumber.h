@@ -1,10 +1,14 @@
 #pragma once
 #include <string>
-// Expression, that is just a single number. TODO: inherid from Expression if the future
-class ExprNumber
+#include "ExpressionBase.h"
+
+// Expression, that is just a single number
+class ExprNumber : public ExpressionBase
 {
 public:
 	ExprNumber(const std::string& text);
+	// Returns the value
+	double Calculate();
 
 private:
 	// Value of the number

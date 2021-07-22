@@ -3,7 +3,6 @@
 #include <vector>
 #include <list>
 #include "LiteralsContainer.h"
-#include <memory>
 #include "Lexem.h"
 
 // Extracts lexems from the given text and adds them to a vector
@@ -18,7 +17,7 @@ public:
 	// Returns extracted lexems
 	std::list<Lexem> GetParsed() const;
 	// Returns extracted literals
-	std::shared_ptr<LiteralsContainer> GetLiteralsPtr();
+	LiteralsContainer& GetLiterals();
 private:
 	// State of the finite state machine
 	struct LexState
@@ -31,7 +30,7 @@ private:
 	// Extracted lexems
 	std::list<Lexem> _parsed;
 	// Container for extracted numbers, cell IDs, and cell selections
-	std::shared_ptr<LiteralsContainer> _literals;
+	LiteralsContainer _literals;
 	// Finite-state machine used to identify func names, dividers, and operations
 	static const std::vector<LexState> _states_graph;
 	/* Finite-state machine is good and fast, but it's hard to modify in the future, 

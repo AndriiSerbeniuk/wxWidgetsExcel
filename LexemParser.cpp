@@ -31,9 +31,9 @@ const std::map<int, int> LexemParser::_sym_keys{
 	{ 5, kRoundOpen }, { 6, kRoundClosed }, { 7, kSemicolon }, { 8, kColon }
 };
 
-LexemParser::LexemParser() : _raw(), _parsed(), _literals(new LiteralsContainer()) {}
+LexemParser::LexemParser() : _raw(), _parsed() {}
 
-LexemParser::LexemParser(std::string text) : _parsed(), _literals(new LiteralsContainer())
+LexemParser::LexemParser(std::string text) : _parsed()
 {
 	SetText(text);
 }
@@ -45,7 +45,7 @@ void LexemParser::SetText(std::string text)
 	{
 		*i = std::toupper(*i);
 	}
-	_literals->Clear();
+	_literals.Clear();
 	_parsed.clear();
 	_parse();
 }
@@ -55,7 +55,7 @@ std::list<Lexem> LexemParser::GetParsed() const
 	return _parsed;
 }
 
-std::shared_ptr<LiteralsContainer> LexemParser::GetLiteralsPtr()
+LiteralsContainer& LexemParser::GetLiterals()
 {
 	return _literals;
 }
@@ -173,9 +173,9 @@ Lexem LexemParser::_extract_number(const char*& text)
 		number.append(temp, nSize);
 	}
 	// Adding it to the literals creates ExprNumber object that parses the number
-	_literals->Nums.push_back(number);	
+	_literals.Nums.push_back(number);	
 	// Lexem value contains number's index in the literals vector
-	return Lexem({ kNumber, static_cast<int>(_literals->Nums.size() - 1)});
+	return Lexem({ kNumber, static_cast<int>(_literals.Nums.size() - 1)});
 }
 
 Lexem LexemParser::_extract_cell_id(const char*& text)
@@ -207,9 +207,9 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 	}
 	rowPart.append(temp, nSize);
 	// Adding it to the literals creates ExprCell object that parses the row and col values
-	_literals->Cells.push_back({ rowPart, colPart });
+	_literals.Cells.push_back({ rowPart, colPart });
 	// Lexem value contains cell's index in the literals vector
-	return Lexem({ kCell, static_cast<int>(_literals->Cells.size() - 1) });
+	return Lexem({ kCell, static_cast<int>(_literals.Cells.size() - 1) });
 }
 
 void LexemParser::_form_cell_selections()
@@ -223,11 +223,11 @@ void LexemParser::_form_cell_selections()
 	{
 		if (*curr == Lexem::LColon && *prev == Lexem::LCell && *next == Lexem::LCell)
 		{
-			ExprCell& c1 = _literals->Cells[prev->Value];
-			ExprCell& c2 = _literals->Cells[next->Value];
-			_literals->Selections.push_back({ c1.GetRow(), c1.GetColumn(), c2.GetRow(), c2.GetColumn() });
+			ExprCell& c1 = _literals.Cells[prev->Value];
+			ExprCell& c2 = _literals.Cells[next->Value];
+			_literals.Selections.push_back({ c1.GetRow(), c1.GetColumn(), c2.GetRow(), c2.GetColumn() });
 			// Insert selection lexem before first cell lexem
-			_parsed.insert(prev, Lexem({ kCellSelection, static_cast<int>(_literals->Selections.size() - 1) }));
+			_parsed.insert(prev, Lexem({ kCellSelection, static_cast<int>(_literals.Selections.size() - 1) }));
 			// Erase cell:cell. Next point to the lexem after selection
 			next = _parsed.erase(prev, ++next);
 		}

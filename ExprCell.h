@@ -16,7 +16,7 @@ public:
 	// Returns cell's column index
 	int GetColumn() const;
 	// Set grid to take values from
-	void SetGrid(wxGrid* grid);
+	void SetGrid(const wxGrid* grid);
 	// Returns the cell's value from the given wxGrid
 	virtual double Calculate();
 
@@ -26,7 +26,7 @@ protected:
 	// Row index
 	int _row;
 	// wxGrid to take the data from
-	wxGrid* _grid;
+	const wxGrid* _grid;
 	// Gets the cell value grom the given wxGrid
 	double _get_cell_value() const;
 private:

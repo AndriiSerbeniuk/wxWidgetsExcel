@@ -134,11 +134,14 @@ void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
 	e.Skip();
 }
 
+#include "CellFunction.h"
 void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
 {
 	// testing code
-	
-
+	//_grid->SetCellValue(0, 0, "=2+2");
+	CellFunction cf(wxGridCellCoords(0, 0), _grid);
+	std::string r = cf.GetResult();
+	_grid->SetCellValue(1,1, r);
 	//=====
 	// Open a frame with help, main frame shoould still be interactable
 	e.Skip();

@@ -37,7 +37,7 @@ int ExprCell::GetColumn() const
 	return _column;
 }
 
-void ExprCell::SetGrid(wxGrid* grid)
+void ExprCell::SetGrid(const wxGrid* grid)
 {
 	_grid = grid;
 }

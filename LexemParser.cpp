@@ -69,11 +69,10 @@ void LexemParser::_parse()
 	int graphResult = 0, lexStart = 0, lexEnd = 0;;
 	const char* temp = nullptr;
 	Lexem curLexem;
-
+	while (isspace(*text) && *text != '\0')	// Skip spaces
+		text++;
 	while (*text != '\0')
 	{
-		while (isspace(*text))	// Skip spaces
-			text++;
 		lexStart = text - _raw.c_str();	// Lexem starting index
 		// If symbol's a letter - it's either a keyword or a cell id
 		if (isalpha(*text))	
@@ -117,6 +116,8 @@ void LexemParser::_parse()
 		curLexem.StartInd = lexStart;
 		curLexem.EndInd = lexEnd;
 		_parsed.push_back(curLexem);
+		while (isspace(*text) && *text != '\0')	// Skip spaces
+			text++;
 	}
 	_form_cell_selections();
 }

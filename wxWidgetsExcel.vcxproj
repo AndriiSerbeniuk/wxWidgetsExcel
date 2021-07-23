@@ -22,9 +22,10 @@
     <ClInclude Include="CellFunction.h" />
     <ClInclude Include="ExprCell.h" />
     <ClInclude Include="ExprCellSelection.h" />
-    <ClInclude Include="Expression.h" />
+    <ClInclude Include="ExprDiv.h" />
     <ClInclude Include="ExpressionBase.h" />
     <ClInclude Include="ExprFormer.h" />
+    <ClInclude Include="ExprMul.h" />
     <ClInclude Include="ExprNumber.h" />
     <ClInclude Include="ExprSubtract.h" />
     <ClInclude Include="ExprSum.h" />
@@ -41,9 +42,10 @@
     <ClCompile Include="CellFunction.cpp" />
     <ClCompile Include="ExprCell.cpp" />
     <ClCompile Include="ExprCellSelection.cpp" />
-    <ClCompile Include="Expression.cpp" />
+    <ClCompile Include="ExprDiv.cpp" />
     <ClCompile Include="ExpressionBase.cpp" />
     <ClCompile Include="ExprFormer.cpp" />
+    <ClCompile Include="ExprMul.cpp" />
     <ClCompile Include="ExprNumber.cpp" />
     <ClCompile Include="ExprSubtract.cpp" />
     <ClCompile Include="ExprSum.cpp" />

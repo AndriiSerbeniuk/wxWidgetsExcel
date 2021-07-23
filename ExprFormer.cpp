@@ -14,10 +14,16 @@ ExpressionBase* ExprFormer::Form(std::list<Lexem> lexems,
 	{
 		// Form + and - first
 		retVal = _form_sum_or_subtract(lexems, literals, grid);
-		
-		// TODO: if !retval form mul ... 
+		if (!retVal)
+		{
+			retVal = _form_mul_or_div(lexems, literals, grid);
+			if (!retVal)
+			{
+				retVal = _form_parentheses(lexems, literals, grid);
+			}
+		}
 	}
-
+	
 	// form * and /
 
 	// form ()
@@ -27,6 +33,20 @@ ExpressionBase* ExprFormer::Form(std::list<Lexem> lexems,
 	return retVal;
 }
 
+ExpressionBase* ExprFormer::_form_parentheses(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
+{
+	ExpressionBase* res = nullptr;
+	auto first = lexems.begin();
+	auto last = --lexems.end();
+	if (*first == Lexem::LRoundOpen && *last == Lexem::LRoundClosed)
+	{
+		std::list<Lexem> parentheses;
+		parentheses.assign(++first, last);
+		res = Form(parentheses, literals, grid);
+	}
+	return res;
+}
+
 TwoArgExpression* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
 {
 	TwoArgExpression* res = nullptr;
@@ -34,6 +54,8 @@ TwoArgExpression* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, con
 	int parenthesesFound = 0;
 	for (auto i = lexems.begin(); i != lexems.end() && !res; i++)
 	{
+		if (i->Type != kDivider && i->Type != kOperation)
+			continue;
 		switch (i->Value)
 		{
 		case kRoundOpen:
@@ -46,26 +68,19 @@ TwoArgExpression* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, con
 			if (!parenthesesFound)
 			{
 				std::list<Lexem> left;
-				left.insert(left.begin(), lexems.begin(), i);
-				i++;
 				std::list<Lexem> right;
-				right.insert(right.begin(), i, lexems.end());
+				_extract_left_right(lexems, i, left, right);
 				res = new ExprSum(Form(left, literals, grid), Form(right, literals, grid));
 			}
 			break;
 		case kMinus:
-			if (!parenthesesFound)
+			// If the expression starts with minus it's handled as multiplication by -1 elsewhere
+			if (!parenthesesFound && i != lexems.begin())	
 			{
 				std::list<Lexem> left;
-				left.insert(left.begin(), lexems.begin(), i);
-				i++;
 				std::list<Lexem> right;
-				right.insert(right.begin(), i, lexems.end());
-				if (left.size())
-					res = new ExprSubtract(Form(left, literals, grid), Form(right, literals, grid));
-				// TODO: this is wrong. it should be multiplied here, so move this to hte multiplication when it's ready
-				//else
-				//	res = new ExprSubtract(nullptr, Form(right, literals, grid));	
+				_extract_left_right(lexems, i, left, right);
+				res = new ExprSubtract(Form(left, literals, grid), Form(right, literals, grid));	
 			}
 			break;
 		default:
@@ -73,6 +88,68 @@ TwoArgExpression* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, con
 		}
 	}
 	return res;
+}
+
+TwoArgExpression* ExprFormer::_form_mul_or_div(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
+{
+	TwoArgExpression* res = nullptr;
+	// Find first + or - on this depth (not in parentheses or in a function)
+	int parenthesesFound = 0;
+	for (auto i = lexems.begin(); i != lexems.end() && !res; i++)
+	{
+		if (i->Type != kDivider && i->Type != kOperation)
+			continue;
+		switch (i->Value)
+		{
+		case kRoundOpen:
+			parenthesesFound++;
+			break;
+		case kRoundClosed:
+			parenthesesFound--;
+			break;
+		case kMultiply:
+			if (!parenthesesFound)
+			{
+				std::list<Lexem> left;
+				std::list<Lexem> right;
+				_extract_left_right(lexems, i, left, right);
+				res = new ExprMul(Form(left, literals, grid), Form(right, literals, grid));
+			}
+			break;
+		case kDivide:
+			if (!parenthesesFound)
+			{
+				std::list<Lexem> left;
+				std::list<Lexem> right;
+				_extract_left_right(lexems, i, left, right);
+				res = new ExprDiv(Form(left, literals, grid), Form(right, literals, grid));
+			}
+			break;
+		case kMinus:
+			if (!parenthesesFound && i == lexems.begin())	// Make the expression negative
+			{
+				std::list<Lexem> left;
+				std::list<Lexem> right;
+				_extract_left_right(lexems, i, left, right);
+				res = new ExprMul(-1, Form(right, literals, grid));
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	return res;
+}
+
+void ExprFormer::_extract_left_right(
+	std::list<Lexem>& lexems, 
+	std::list<Lexem>::iterator& middle, 
+	std::list<Lexem>& left_out, 
+	std::list<Lexem>& right_out)
+{
+	left_out.insert(left_out.begin(), lexems.begin(), middle);
+	middle++;
+	right_out.insert(right_out.begin(), middle, lexems.end());
 }
 
 ExpressionBase* ExprFormer::_form_literal(const Lexem& lexem, const LiteralsContainer& literals, const wxGrid* grid)

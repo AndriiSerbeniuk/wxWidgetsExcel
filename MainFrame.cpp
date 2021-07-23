@@ -153,7 +153,7 @@ void MainFrame::_on_func_txt_changed(wxCommandEvent& e)	// TODO
 	e.Skip();
 }
 
-void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO
+void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO: unfocusing the control doesn't call this method, but it should
 {
 	// testing code
 	/*LexemParser lp(e.GetString().ToStdString());

@@ -5,6 +5,8 @@
 #include "LiteralsContainer.h"
 #include "ExprSum.h"
 #include "ExprSubtract.h"
+#include "ExprMul.h"
+#include "ExprDiv.h"
 #include "ExprNumber.h"
 #include "ExprCell.h"
 #include "ExprCellSelection.h"
@@ -19,13 +21,19 @@ public:
 
 private:
 	ExprFormer();
-	/*static ExpressionBase* _form_parentheses(std::list<Lexem> lexems,
-		const LiteralsContainer& literals, const wxGrid* grid);*/	// TODO
-	// Create a + or - expression
+	// Forms internal expression
+	static ExpressionBase* _form_parentheses(std::list<Lexem> lexems,
+		const LiteralsContainer& literals, const wxGrid* grid);
+	// Creates a + or - expression
 	static TwoArgExpression* _form_sum_or_subtract(std::list<Lexem> lexems,
 		const LiteralsContainer& literals, const wxGrid* grid);
-
-	// Create a literal expression (number, cell, or cell selection)
+	// Creates a * or / expression
+	static TwoArgExpression* _form_mul_or_div(std::list<Lexem> lexems,
+		const LiteralsContainer& literals, const wxGrid* grid);
+	
+	static void _extract_left_right(std::list<Lexem>& lexems, std::list<Lexem>::iterator& middle,
+		std::list<Lexem>& left_out,	std::list<Lexem>& right_out);
+	// Creates a literal expression (number, cell, or cell selection)
 	static ExpressionBase* _form_literal(const Lexem& lexem,
 		const LiteralsContainer& literals, const wxGrid* grid);
 	static ExprNumber* _form_number(const Lexem& lexem, 

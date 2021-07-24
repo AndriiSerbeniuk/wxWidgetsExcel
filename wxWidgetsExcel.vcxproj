@@ -29,6 +29,13 @@
     <ClInclude Include="ExprNumber.h" />
     <ClInclude Include="ExprSubtract.h" />
     <ClInclude Include="ExprSum.h" />
+    <ClInclude Include="FuncAvg.h" />
+    <ClInclude Include="FuncMax.h" />
+    <ClInclude Include="FuncMin.h" />
+    <ClInclude Include="FuncPow.h" />
+    <ClInclude Include="FuncSqrt.h" />
+    <ClInclude Include="FuncSum.h" />
+    <ClInclude Include="FuncBase.h" />
     <ClInclude Include="GrammarChecker.h" />
     <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="LexemParser.h" />
@@ -49,6 +56,13 @@
     <ClCompile Include="ExprNumber.cpp" />
     <ClCompile Include="ExprSubtract.cpp" />
     <ClCompile Include="ExprSum.cpp" />
+    <ClCompile Include="FuncAvg.cpp" />
+    <ClCompile Include="FuncMax.cpp" />
+    <ClCompile Include="FuncMin.cpp" />
+    <ClCompile Include="FuncPow.cpp" />
+    <ClCompile Include="FuncSqrt.cpp" />
+    <ClCompile Include="FuncSum.cpp" />
+    <ClCompile Include="FunctionExpression.cpp" />
     <ClCompile Include="GrammarChecker.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="LexemParser.cpp" />

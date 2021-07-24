@@ -6,6 +6,7 @@ class TwoArgExpression : public ExpressionBase
 {
 public:
 	TwoArgExpression();
+	TwoArgExpression(ExpressionBase* nested1, ExpressionBase* nested2);
 	virtual ~TwoArgExpression();
 	// Calculate the value of the expression
 	virtual double Calculate();

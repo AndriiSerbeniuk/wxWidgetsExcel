@@ -11,7 +11,15 @@ CellFunction::CellFunction(wxGridCellCoords cell, wxGrid* grid)
 		// Form lexems into a calculable expression
 		_expression = ExprFormer::Form(_parser.GetParsed(), _parser.GetLiterals(), _grid);
 		if (_expression)
-			_result = std::to_string(_expression->Calculate());
+		{
+			try
+			{
+				double res = _expression->Calculate();
+				_result = std::to_string(res);
+			}
+			catch (std::exception)
+			{}
+		}
 	}
 }
 

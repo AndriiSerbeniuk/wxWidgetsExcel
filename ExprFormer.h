@@ -9,7 +9,11 @@
 #include "ExprDiv.h"
 #include "ExprNumber.h"
 #include "ExprCell.h"
-#include "ExprCellSelection.h"
+#include "FuncSqrt.h"
+#include "FuncSum.h"
+#include "FuncAvg.h"
+#include "FuncPow.h"
+#include "FuncMax.h"
 
 // Forms expressions using given lexems, literals, and wxGrid to take cell values from
 class ExprFormer
@@ -21,7 +25,7 @@ public:
 
 private:
 	ExprFormer();
-	// Forms internal expression
+	// Creates internal expression
 	static ExpressionBase* _form_parentheses(std::list<Lexem> lexems,
 		const LiteralsContainer& literals, const wxGrid* grid);
 	// Creates a + or - expression
@@ -30,7 +34,10 @@ private:
 	// Creates a * or / expression
 	static TwoArgExpression* _form_mul_or_div(std::list<Lexem> lexems,
 		const LiteralsContainer& literals, const wxGrid* grid);
-	
+	// Creates function expression
+	static FuncBase* _form_func(std::list<Lexem> lexems,
+		const LiteralsContainer& literals, const wxGrid* grid);
+	// Extracts all lexems to the left and to the right from the given middle lexem
 	static void _extract_left_right(std::list<Lexem>& lexems, std::list<Lexem>::iterator& middle,
 		std::list<Lexem>& left_out,	std::list<Lexem>& right_out);
 	// Creates a literal expression (number, cell, or cell selection)

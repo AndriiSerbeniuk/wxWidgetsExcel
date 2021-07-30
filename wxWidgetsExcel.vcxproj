@@ -64,7 +64,7 @@
     <ClCompile Include="FuncPow.cpp" />
     <ClCompile Include="FuncSqrt.cpp" />
     <ClCompile Include="FuncSum.cpp" />
-    <ClCompile Include="FunctionExpression.cpp" />
+    <ClCompile Include="FuncBase.cpp" />
     <ClCompile Include="GrammarChecker.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="LexemParser.cpp" />

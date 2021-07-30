@@ -13,168 +13,198 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Visuals">
+      <UniqueIdentifier>{92b94c49-f9e0-43d1-9f88-ff35f78cb442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CellFunctions">
+      <UniqueIdentifier>{eef7a04f-f286-4284-837b-86e9b387275f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CellFunctions\Expressions">
+      <UniqueIdentifier>{068fce69-3683-4034-9165-3fbd3ac6a9cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CellFunctions\Expressions\Arithmetic">
+      <UniqueIdentifier>{cdedabc9-5edc-4866-b257-c2744e603b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CellFunctions\Expressions\Functions">
+      <UniqueIdentifier>{f61ed671-5a62-425b-b195-1d7f89cba851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visuals">
+      <UniqueIdentifier>{5bc53d4a-fd7b-4bd4-8271-3c1784fc5b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CellFunctions">
+      <UniqueIdentifier>{5745094e-0938-48f0-bbbd-d50f377d6cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CellFunctions\Expressions">
+      <UniqueIdentifier>{14ebd05c-def3-4629-92fe-2a890bd2b9d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CellFunctions\Expressions\Arithmetic">
+      <UniqueIdentifier>{5cd8ecad-6142-4d6f-a61b-ef042e56074c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CellFunctions\Expressions\Functions">
+      <UniqueIdentifier>{156ec608-68e4-491d-ab88-40816761a0ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wxExcel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Visuals</Filter>
     </ClInclude>
     <ClInclude Include="MainFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Visuals</Filter>
     </ClInclude>
     <ClInclude Include="InfiniteGrid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LexemParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprNumber.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprCell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LiteralsContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Lexem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprCellSelection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GrammarChecker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExpressionBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TwoArgExpression.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprSum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprFormer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Visuals</Filter>
     </ClInclude>
     <ClInclude Include="CellFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprSubtract.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprMul.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExprDiv.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncSqrt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncSum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncAvg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncPow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncMax.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncMin.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CellFunctions</Filter>
     </ClInclude>
     <ClInclude Include="CellsObserver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CellFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexem.h">
+      <Filter>Header Files\CellFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="GrammarChecker.h">
+      <Filter>Header Files\CellFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprCell.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprCellSelection.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprDiv.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprMul.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprNumber.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprSubtract.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprSum.h">
+      <Filter>Header Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="ExprFormer.h">
+      <Filter>Header Files\CellFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpressionBase.h">
+      <Filter>Header Files\CellFunctions\Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncBase.h">
+      <Filter>Header Files\CellFunctions\Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoArgExpression.h">
+      <Filter>Header Files\CellFunctions\Expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncAvg.h">
+      <Filter>Header Files\CellFunctions\Expressions\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncMax.h">
+      <Filter>Header Files\CellFunctions\Expressions\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncMin.h">
+      <Filter>Header Files\CellFunctions\Expressions\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncPow.h">
+      <Filter>Header Files\CellFunctions\Expressions\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncSqrt.h">
+      <Filter>Header Files\CellFunctions\Expressions\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FuncSum.h">
+      <Filter>Header Files\CellFunctions\Expressions\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="LexemParser.h">
+      <Filter>Header Files\CellFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="LiteralsContainer.h">
+      <Filter>Header Files\CellFunctions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wxExcel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Visuals</Filter>
     </ClCompile>
     <ClCompile Include="MainFrame.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Visuals</Filter>
     </ClCompile>
     <ClCompile Include="InfiniteGrid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LexemParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprNumber.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprCell.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LiteralsContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Lexem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprCellSelection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GrammarChecker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LexParsingConsts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExpressionBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TwoArgExpression.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprSum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprFormer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Visuals</Filter>
     </ClCompile>
     <ClCompile Include="CellFunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprSubtract.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprMul.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprDiv.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FunctionExpression.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncSqrt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncSum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncAvg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncPow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncMax.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncMin.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CellFunctions</Filter>
     </ClCompile>
     <ClCompile Include="CellsObserver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="GrammarChecker.cpp">
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="Lexem.cpp">
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="LexemParser.cpp">
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="LexParsingConsts.cpp">
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="LiteralsContainer.cpp">
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncBase.cpp">
+      <Filter>Source Files\CellFunctions\Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoArgExpression.cpp">
+      <Filter>Source Files\CellFunctions\Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressionBase.cpp">
+      <Filter>Source Files\CellFunctions\Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprCell.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprCellSelection.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprDiv.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprFormer.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprMul.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprNumber.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprSubtract.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprSum.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncAvg.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncMax.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncMin.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncPow.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncSqrt.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FuncSum.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

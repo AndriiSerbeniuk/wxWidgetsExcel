@@ -12,6 +12,8 @@ public:
 	Returns one value at a time, call multiple times to get all the values.
 	Throws std::out_of_range.*/
 	double Calculate();
+	// Move to the next cell
+	void Advance();
 	// Set current cell to the start of the selection
 	void ResetRange();
 	// Returns width of the selection

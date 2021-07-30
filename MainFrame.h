@@ -2,7 +2,7 @@
 #include "wx\wx.h"
 #include "wx\grid.h"
 #include "InfiniteGrid.h"
-
+#include "CellsObserver.h"
 
 class MainFrame : public wxFrame
 {
@@ -47,6 +47,8 @@ private:
 	wxMenuItem* _mitem_save_as;
 	wxMenuItem* _mitem_quit;
 
+	CellsObserver* _observer;
+
 	// Events
 	wxDECLARE_EVENT_TABLE();
 
@@ -66,5 +68,6 @@ private:
 	// Utility functions
 	wxString _dialog_open();
 	wxString _dialog_save();
+	void _on_text_entered(wxGridCellCoords cell);
 };
 

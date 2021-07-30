@@ -55,10 +55,13 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	_sizer_panel->Add(_panel_main, wxEXPAND);
 	SetSizer(_sizer_panel);
 	_grid->ResizeData();
+	
+	_observer = new CellsObserver(_grid);
 }
 
 MainFrame::~MainFrame()
 {
+	delete _observer;
 	// wxWidgets manages dynamic memory of its visual elements internally
 }
 
@@ -73,13 +76,13 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 	EVT_TEXT(idTxtFunction, _on_func_txt_changed)
 	EVT_TEXT_ENTER(idTxtFunction, _on_func_txt_enter)
 	EVT_GRID_CMD_CELL_CHANGED(idGrid, _on_grid_cell_enter)
-	EVT_CLOSE(_on_close)
 	EVT_GRID_CMD_SELECT_CELL(idGrid, _on_cell_selected)
+	EVT_CLOSE(_on_close)
 wxEND_EVENT_TABLE()
 
 void MainFrame::_on_new_press(wxCommandEvent& e)	// TODO
 {
-	_grid->ClearGrid();
+	//_grid->ClearGrid();
 	// TODO: make the grid resize itself here
 	e.Skip();
 }
@@ -129,19 +132,16 @@ void MainFrame::_on_quit_press(wxCommandEvent& e)
 void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
 {
 	// decode the the text with lexical analyzer
-
+	
 	this->SetFocus();	// unfocus the control
 	e.Skip();
 }
 
-#include "CellFunction.h"
 void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
 {
 	// testing code
-	//_grid->SetCellValue(0, 0, "=2+2");
-	CellFunction cf(wxGridCellCoords(0, 0), _grid);
-	std::string r = cf.GetResult();
-	_grid->SetCellValue(1,1, r);
+	
+	
 	//=====
 	// Open a frame with help, main frame shoould still be interactable
 	e.Skip();
@@ -160,15 +160,16 @@ void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO: unfocusing the co
 	bool correct = GrammarChecker::Run(lp.GetParsed());*/
 	//=====
 	// start function parse and calculation
-
+	_on_text_entered(_grid->GetSelectedCell());
 	this->SetFocus();	// unfocus the control
 	e.Skip();
 }
 
 void MainFrame::_on_grid_cell_enter(wxGridEvent& e)	// TODO
 {
-	_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
+	//_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
 	// start function parse and calculation
+	_on_text_entered(wxGridCellCoords(e.GetRow(), e.GetCol()));
 	e.Skip();
 }
 
@@ -180,7 +181,10 @@ void MainFrame::_on_close(wxCloseEvent& e)	// TODO
 
 void MainFrame::_on_cell_selected(wxGridEvent& e)
 {
-	_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
+	if (_observer->IsCellFunction({ e.GetRow(), e.GetCol() }))
+		_txt_function->ChangeValue(_observer->GetRaw({ e.GetRow(), e.GetCol() }));
+	else
+		_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
 	_grid->SelectCell(wxGridCellCoords(e.GetRow(), e.GetCol()));
 	e.Skip();
 }
@@ -194,3 +198,23 @@ wxString MainFrame::_dialog_save()	// TODO
 {
 	return wxString();
 }
+
+void MainFrame::_on_text_entered(wxGridCellCoords cell)
+{
+	//wxString text = _grid->GetCellValue(cell);
+	//bool isObserved = _observer->Contains(cell);
+	//if (text[0] == '=')
+	//{
+	//	if (isObserved)
+	//		_observer->Update(cell);
+	//	else
+	//		_observer->AddCell(cell);
+	//	//_grid->SetCellValue(cell, _observer->GetValue(cell));
+	//}
+	//else if (isObserved)
+	//{
+	//	_observer->RemoveCell(cell);
+	//}
+	_observer->Update(cell);
+}
+

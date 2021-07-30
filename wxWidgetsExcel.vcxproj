@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CellFunction.h" />
+    <ClInclude Include="CellsObserver.h" />
     <ClInclude Include="ExprCell.h" />
     <ClInclude Include="ExprCellSelection.h" />
     <ClInclude Include="ExprDiv.h" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CellFunction.cpp" />
+    <ClCompile Include="CellsObserver.cpp" />
     <ClCompile Include="ExprCell.cpp" />
     <ClCompile Include="ExprCellSelection.cpp" />
     <ClCompile Include="ExprDiv.cpp" />

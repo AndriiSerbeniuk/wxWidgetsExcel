@@ -20,6 +20,12 @@ double ExprCellSelection::Calculate()
 			+ ";" + std::to_string(_column) + ") is out of selection range;"));
 	double retVal = _get_cell_value();
 	// Go to the next cell
+	Advance();
+	return retVal;
+}
+
+void ExprCellSelection::Advance()
+{
 	if (_column < _c2col)
 		_column++;
 	else
@@ -27,7 +33,6 @@ double ExprCellSelection::Calculate()
 		_row++;
 		_column = _c1col;
 	}
-	return retVal;
 }
 
 void ExprCellSelection::ResetRange()

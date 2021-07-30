@@ -50,6 +50,11 @@ void LexemParser::SetText(std::string text)
 	_parse();
 }
 
+std::string LexemParser::GetText() const
+{
+	return _raw;
+}
+
 std::list<Lexem> LexemParser::GetParsed() const
 {
 	return _parsed;

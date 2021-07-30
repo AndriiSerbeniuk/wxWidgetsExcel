@@ -10,6 +10,8 @@ GrammarChecker::GState::GState(const std::vector<Lexem>& values, int transition,
 
 bool GrammarChecker::Run(std::list<Lexem> lexems)
 {
+	if (!lexems.size())
+		return false;
 	int stateNum = 1;
 	std::list<Lexem>::iterator lexemIter = lexems.begin();
 	Lexem* lexem = &*lexemIter;

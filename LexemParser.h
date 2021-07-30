@@ -14,6 +14,8 @@ public:
 
 	// Sets text and starts parsing
 	void SetText(std::string text);
+	// Get text
+	std::string GetText() const;
 	// Returns extracted lexems
 	std::list<Lexem> GetParsed() const;
 	// Returns extracted literals

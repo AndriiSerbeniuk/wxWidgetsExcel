@@ -8,7 +8,7 @@ FuncSum::~FuncSum()
 
 double FuncSum::Calculate()
 {
-	int sum = 0;
+	double sum = 0;
 	for (int i = 0; i < _args_count; i++)
 	{
 		if (typeid(*_args[i]) == typeid(ExprCellSelection))
@@ -25,10 +25,12 @@ double FuncSum::Calculate()
 
 double FuncSum::_calculate_selection(ExprCellSelection* arg)
 {
-	int sum = 0, doTimes = arg->GetHeight() * arg->GetWidth();
+	double sum = 0;
+	int doTimes = arg->GetHeight() * arg->GetWidth();
 	for (int i = 0; i < doTimes; i++)
 	{
 		sum += arg->Calculate();
 	}
+	arg->ResetRange();
 	return sum;
 }

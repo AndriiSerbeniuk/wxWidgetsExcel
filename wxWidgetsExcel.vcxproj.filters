@@ -90,6 +90,9 @@
     <ClInclude Include="FuncMin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CellsObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wxExcel.cpp">
@@ -168,6 +171,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FuncMin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CellsObserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

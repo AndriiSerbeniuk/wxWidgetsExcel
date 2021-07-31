@@ -3,6 +3,7 @@
 #include "wx\grid.h"
 #include "InfiniteGrid.h"
 #include "CellsObserver.h"
+#include "FunctionsInfoFrame.h"
 
 class MainFrame : public wxFrame
 {
@@ -48,10 +49,10 @@ private:
 	wxMenuItem* _mitem_quit;
 
 	CellsObserver* _observer;
+	FunctionsInfoFrame* _info_frame;
 
 	// Events
 	wxDECLARE_EVENT_TABLE();
-
 	void _on_new_press(wxCommandEvent& e);
 	void _on_open_press(wxCommandEvent& e);
 	void _on_save_press(wxCommandEvent& e);

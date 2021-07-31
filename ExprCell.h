@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "wx/grid.h"
+#include "InfiniteGrid.h"
 #include "ExpressionBase.h"
 
 // Expression, that is just a single cell coordinate and value
@@ -16,7 +16,7 @@ public:
 	// Returns cell's column index
 	int GetColumn() const;
 	// Set grid to take values from
-	void SetGrid(const wxGrid* grid);
+	void SetGrid(const InfiniteGrid* grid);
 	// Returns the cell's value from the given wxGrid
 	virtual double Calculate();
 
@@ -25,8 +25,10 @@ protected:
 	int _column;
 	// Row index
 	int _row;
-	// wxGrid to take the data from
-	const wxGrid* _grid;
+	// wxGrid to take the data from.
+	// Changed type to InfiniteGrid because GetCellValue of wxGrid isn't virtual
+	// and InfiniteGrid's override of it is required here.
+	const InfiniteGrid* _grid;
 	// Gets the cell value grom the given wxGrid
 	double _get_cell_value() const;
 private:

@@ -65,6 +65,18 @@ LiteralsContainer& LexemParser::GetLiterals()
 	return _literals;
 }
 
+ExprCell LexemParser::ExtractCellId(const char* text)
+{
+	int tLen = strlen(text);
+	char* tCopy = new char[tLen + 1], *copyStart = tCopy;
+	strcpy(tCopy, text);
+	for (int i = 0; i < tLen; i++)
+		tCopy[i] = toupper(tCopy[i]);
+	ExprCell cell = _extract_cell_id_modifptr((const char*&)tCopy);
+	delete[] copyStart;
+	return cell;
+}
+
 void LexemParser::_parse()
 {
 	const char* text = _raw.c_str();
@@ -186,6 +198,17 @@ Lexem LexemParser::_extract_number(const char*& text)
 
 Lexem LexemParser::_extract_cell_id(const char*& text)
 {
+	// Adding it to the literals creates ExprCell object that parses the row and col values
+	ExprCell cellId = _extract_cell_id_modifptr(text);
+	if (cellId.GetRow() == -1 || cellId.GetColumn() == -1)
+		return Lexem(Lexem::LErr);
+	_literals.Cells.push_back(cellId);
+	// Lexem value contains cell's index in the literals vector
+	return Lexem({ kCell, static_cast<int>(_literals.Cells.size() - 1) });
+}
+
+ExprCell LexemParser::_extract_cell_id_modifptr(const char*& text)
+{
 	std::string colPart("");
 	int nSize = 0;
 	const char* temp = text;
@@ -196,7 +219,7 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 	}
 	if (!nSize)
 	{
-		return Lexem(Lexem::LErr);
+		return ExprCell(-1, -1);
 	}
 	colPart.append(temp, nSize);
 	nSize = 0;
@@ -209,13 +232,11 @@ Lexem LexemParser::_extract_cell_id(const char*& text)
 	}
 	if (!nSize)
 	{
-		return Lexem(Lexem::LErr);	// Both row and column must be specified
+		return ExprCell(-1, -1);	// Both row and column must be specified
 	}
 	rowPart.append(temp, nSize);
-	// Adding it to the literals creates ExprCell object that parses the row and col values
-	_literals.Cells.push_back({ rowPart, colPart });
-	// Lexem value contains cell's index in the literals vector
-	return Lexem({ kCell, static_cast<int>(_literals.Cells.size() - 1) });
+	//Create ExprCell object that parses the row and col values
+	return ExprCell(rowPart, colPart);
 }
 
 void LexemParser::_form_cell_selections()

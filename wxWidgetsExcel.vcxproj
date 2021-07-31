@@ -37,6 +37,7 @@
     <ClInclude Include="FuncSqrt.h" />
     <ClInclude Include="FuncSum.h" />
     <ClInclude Include="FuncBase.h" />
+    <ClInclude Include="FunctionsInfoFrame.h" />
     <ClInclude Include="GrammarChecker.h" />
     <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="LexemParser.h" />
@@ -65,6 +66,7 @@
     <ClCompile Include="FuncSqrt.cpp" />
     <ClCompile Include="FuncSum.cpp" />
     <ClCompile Include="FuncBase.cpp" />
+    <ClCompile Include="FunctionsInfoFrame.cpp" />
     <ClCompile Include="GrammarChecker.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="LexemParser.cpp" />

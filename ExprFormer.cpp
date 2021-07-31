@@ -257,13 +257,13 @@ ExprNumber* ExprFormer::_form_number(const Lexem& lexem, const LiteralsContainer
 ExprCell* ExprFormer::_form_cell(const Lexem& lexem, const LiteralsContainer& literals, const wxGrid* grid)
 {
 	ExprCell* cell = new ExprCell(literals.Cells[lexem.Value]);
-	cell->SetGrid(grid);
+	cell->SetGrid((InfiniteGrid*)grid);
 	return cell;
 }
 
 ExprCellSelection* ExprFormer::_form_cell_selection(const Lexem& lexem, const LiteralsContainer& literals, const wxGrid* grid)
 {
 	ExprCellSelection* sel = new ExprCellSelection(literals.Selections[lexem.Value]);
-	sel->SetGrid(grid);
+	sel->SetGrid((InfiniteGrid*)grid);
 	return sel;
 }

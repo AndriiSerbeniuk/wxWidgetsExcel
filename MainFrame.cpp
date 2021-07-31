@@ -54,14 +54,17 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	_sizer_panel = new wxBoxSizer(wxHORIZONTAL);
 	_sizer_panel->Add(_panel_main, wxEXPAND);
 	SetSizer(_sizer_panel);
-	_grid->ResizeData();
+	_grid->ResizeGrid();
 	
 	_observer = new CellsObserver(_grid);
+	_info_frame = new FunctionsInfoFrame(this);
 }
 
 MainFrame::~MainFrame()
 {
 	delete _observer;
+
+	//delete _info_frame;
 	// wxWidgets manages dynamic memory of its visual elements internally
 }
 
@@ -129,25 +132,31 @@ void MainFrame::_on_quit_press(wxCommandEvent& e)
 	e.Skip();
 }
 
-void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)	// TODO
+void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)
 {
 	// decode the the text with lexical analyzer
-	
-	this->SetFocus();	// unfocus the control
+	ExprCell cell = LexemParser::ExtractCellId(e.GetString().c_str());
+	_grid->SelectCell({ cell.GetRow(), cell.GetColumn() });
+	_grid->MakeCellVisible(cell.GetRow(), cell.GetColumn());
+	_grid->SetFocus();	// Focus the grid
 	e.Skip();
 }
 
-void MainFrame::_on_func_help_press(wxCommandEvent& e)	// TODO
+void MainFrame::_on_func_help_press(wxCommandEvent& e)
 {
-	// testing code
-	
-	
-	//=====
-	// Open a frame with help, main frame shoould still be interactable
+	// Show a frame with info, main frame is still interactable
+	if (_info_frame->IsVisible())
+	{
+		_info_frame->Show(false);
+	}
+	else
+	{
+		_info_frame->Show();
+	}
 	e.Skip();
 }
 
-void MainFrame::_on_func_txt_changed(wxCommandEvent& e)	// TODO
+void MainFrame::_on_func_txt_changed(wxCommandEvent& e)
 {
 	_grid->SetCellValue(_grid->GetSelectedCell(), _txt_function->GetValue());
 	e.Skip();
@@ -155,20 +164,16 @@ void MainFrame::_on_func_txt_changed(wxCommandEvent& e)	// TODO
 
 void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO: unfocusing the control doesn't call this method, but it should
 {
-	// testing code
-	/*LexemParser lp(e.GetString().ToStdString());
-	bool correct = GrammarChecker::Run(lp.GetParsed());*/
-	//=====
-	// start function parse and calculation
+	const wxGridCellCoords& selected = _grid->GetSelectedCell();
+	_grid->ResizeData(selected.GetRow(), selected.GetCol(), e.GetString());
 	_on_text_entered(_grid->GetSelectedCell());
-	this->SetFocus();	// unfocus the control
+	_grid->MakeCellVisible(selected);
+	_grid->SetFocus();	// unfocus the control
 	e.Skip();
 }
 
-void MainFrame::_on_grid_cell_enter(wxGridEvent& e)	// TODO
+void MainFrame::_on_grid_cell_enter(wxGridEvent& e)
 {
-	//_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
-	// start function parse and calculation
 	_on_text_entered(wxGridCellCoords(e.GetRow(), e.GetCol()));
 	e.Skip();
 }
@@ -185,7 +190,9 @@ void MainFrame::_on_cell_selected(wxGridEvent& e)
 		_txt_function->ChangeValue(_observer->GetRaw({ e.GetRow(), e.GetCol() }));
 	else
 		_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
-	_grid->SelectCell(wxGridCellCoords(e.GetRow(), e.GetCol()));
+	const wxGridCellCoords& selected = _grid->GetSelectedCell();
+	_txt_cell->ChangeValue(_grid->GetColLabelValue(selected.GetCol())
+		+ _grid->GetRowLabelValue(selected.GetRow()));
 	e.Skip();
 }
 
@@ -201,20 +208,6 @@ wxString MainFrame::_dialog_save()	// TODO
 
 void MainFrame::_on_text_entered(wxGridCellCoords cell)
 {
-	//wxString text = _grid->GetCellValue(cell);
-	//bool isObserved = _observer->Contains(cell);
-	//if (text[0] == '=')
-	//{
-	//	if (isObserved)
-	//		_observer->Update(cell);
-	//	else
-	//		_observer->AddCell(cell);
-	//	//_grid->SetCellValue(cell, _observer->GetValue(cell));
-	//}
-	//else if (isObserved)
-	//{
-	//	_observer->RemoveCell(cell);
-	//}
 	_observer->Update(cell);
 }
 

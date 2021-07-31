@@ -123,6 +123,9 @@
     <ClInclude Include="LiteralsContainer.h">
       <Filter>Header Files\CellFunctions</Filter>
     </ClInclude>
+    <ClInclude Include="FunctionsInfoFrame.h">
+      <Filter>Header Files\Visuals</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wxExcel.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="FuncSum.cpp">
       <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionsInfoFrame.cpp">
+      <Filter>Source Files\Visuals</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

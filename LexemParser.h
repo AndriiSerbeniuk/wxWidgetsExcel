@@ -20,6 +20,9 @@ public:
 	std::list<Lexem> GetParsed() const;
 	// Returns extracted literals
 	LiteralsContainer& GetLiterals();
+	// Extracts cell id from given text into an ExprCell object.
+	static ExprCell ExtractCellId(const char* text);
+
 private:
 	// State of the finite state machine
 	struct LexState
@@ -41,9 +44,9 @@ private:
 	But adaptability is. Should have though of that.
 	*/
 
-	// Keys values, returned by the graph, to the respective functions
+	// Keys values returned by the graph, to the respective functions
 	static const std::map<int, eFunction> _func_keys;
-	// Keys values, returned by the graph, to the respective single symbol lexems
+	// Keys values returned by the graph, to the respective single symbol lexems
 	static const std::map<int, int> _sym_keys;
 
 	// Parses text into a list of lexems
@@ -56,6 +59,8 @@ private:
 	Lexem _extract_number(const char*& text);
 	// Extracts cell ID from text and adds it to the literals
 	Lexem _extract_cell_id(const char*& text);
+	// Extracts cell ID from text and advances the pointer
+	static ExprCell _extract_cell_id_modifptr(const char*& text);
 	// Forms cell:cell series into kCellSelection lexems
 	void _form_cell_selections();
 };

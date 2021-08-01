@@ -2,7 +2,6 @@
 
 MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 {
-	_file_path.clear();
 	SetSize(wxSize(1280, 720));
 
 	_mitem_new = new wxMenuItem(_menu_file, idMItemNew, 
@@ -58,12 +57,15 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	
 	_observer = new CellsObserver(_grid);
 	_info_frame = new FunctionsInfoFrame(this);
+	_f_manager = new GridFileManager(_grid);
+	// for now
+	_f_manager->SetPath("test.grd");
 }
 
 MainFrame::~MainFrame()
 {
 	delete _observer;
-
+	delete _f_manager;
 	//delete _info_frame;
 	// wxWidgets manages dynamic memory of its visual elements internally
 }
@@ -102,18 +104,20 @@ void MainFrame::_on_open_press(wxCommandEvent& e)	// TODO
 
 void MainFrame::_on_save_press(wxCommandEvent& e)	// TODO
 {
-	if (!_file_path.empty())
-	{
-		// save to path
-	}
-	else
-	{
-		// open a dialog
-		
-		// save to path
-	}
+	//if (!_file_path.empty())
+	//{
+	//	// save to path
+	//}
+	//else
+	//{
+	//	// open a dialog
+	//	
+	//	// save to path
+	//}
 
-
+	// testing =====
+	_f_manager->Save();
+	//=====
 	e.Skip();
 }
 
@@ -175,6 +179,7 @@ void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO: unfocusing the co
 void MainFrame::_on_grid_cell_enter(wxGridEvent& e)
 {
 	_on_text_entered(wxGridCellCoords(e.GetRow(), e.GetCol()));
+	
 	e.Skip();
 }
 
@@ -186,6 +191,7 @@ void MainFrame::_on_close(wxCloseEvent& e)	// TODO
 
 void MainFrame::_on_cell_selected(wxGridEvent& e)
 {
+	_grid->SelectCell({ e.GetRow(), e.GetCol() });
 	if (_observer->IsCellFunction({ e.GetRow(), e.GetCol() }))
 		_txt_function->ChangeValue(_observer->GetRaw({ e.GetRow(), e.GetCol() }));
 	else

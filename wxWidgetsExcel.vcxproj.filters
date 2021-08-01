@@ -126,6 +126,9 @@
     <ClInclude Include="FunctionsInfoFrame.h">
       <Filter>Header Files\Visuals</Filter>
     </ClInclude>
+    <ClInclude Include="GridFileManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wxExcel.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="FunctionsInfoFrame.cpp">
       <Filter>Source Files\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="GridFileManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

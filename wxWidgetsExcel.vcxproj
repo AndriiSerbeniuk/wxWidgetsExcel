@@ -39,6 +39,7 @@
     <ClInclude Include="FuncBase.h" />
     <ClInclude Include="FunctionsInfoFrame.h" />
     <ClInclude Include="GrammarChecker.h" />
+    <ClInclude Include="GridFileManager.h" />
     <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="LexemParser.h" />
     <ClInclude Include="Lexem.h" />
@@ -68,6 +69,7 @@
     <ClCompile Include="FuncBase.cpp" />
     <ClCompile Include="FunctionsInfoFrame.cpp" />
     <ClCompile Include="GrammarChecker.cpp" />
+    <ClCompile Include="GridFileManager.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="LexemParser.cpp" />
     <ClCompile Include="Lexem.cpp" />

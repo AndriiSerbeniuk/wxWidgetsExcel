@@ -4,6 +4,7 @@
 #include "InfiniteGrid.h"
 #include "CellsObserver.h"
 #include "FunctionsInfoFrame.h"
+#include "GridFileManager.h"
 
 class MainFrame : public wxFrame
 {
@@ -27,8 +28,6 @@ private:
 		idMItemQuit
 	};
 
-	std::string _file_path;	// TODO: shove this into some other specialised class
-
 	wxPanel* _panel_main;
 	wxMenuBar* _menubar;
 	wxTextCtrl* _txt_cell;
@@ -50,6 +49,7 @@ private:
 
 	CellsObserver* _observer;
 	FunctionsInfoFrame* _info_frame;
+	GridFileManager* _f_manager;
 
 	// Events
 	wxDECLARE_EVENT_TABLE();

@@ -49,7 +49,7 @@ private:
 
 	CellsObserver* _observer;
 	FunctionsInfoFrame* _info_frame;
-	GridFileManager* _f_manager;
+	GridFileManager* _file_manager;
 
 	// Events
 	wxDECLARE_EVENT_TABLE();
@@ -66,9 +66,14 @@ private:
 	void _on_close(wxCloseEvent& e);
 	void _on_cell_selected(wxGridEvent& e);
 
-	// Utility functions
-	wxString _dialog_open();
-	wxString _dialog_save();
+	bool _dialog_open_file();
+	bool _dialog_save_file();
+	void _scenario_unsaved();
+	void _scenario_save();
+	void _scenario_save_as();
+
 	void _on_text_entered(wxGridCellCoords cell);
+	void _init_grid();
+	void _set_txt_func(int row, int col);
 };
 

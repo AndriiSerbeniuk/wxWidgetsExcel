@@ -55,7 +55,7 @@ void InfiniteGrid::SetCellValue(int row, int col, const wxString& s)
 {
 	bool added = _create_cell(row, col);
 	wxGrid::SetCellValue(row, col, s);
-	if (added)
+	if (added || row >= _data_size.GetHeight() || row >= _data_size.GetWidth())
 		_resize_data(row, col, s.empty());
 }
 
@@ -81,6 +81,14 @@ void InfiniteGrid::MakeCellVisible(int row, int col)
 {
 	wxGrid::MakeCellVisible(row, col);
 	ResizeGrid(5, 5);
+}
+
+void InfiniteGrid::ClearGrid()
+{
+	_data_size.Set(1, 1);
+	_data_cells.clear();
+	wxGrid::ClearGrid();
+	SelectCell({ 0,0 });
 }
 
 int InfiniteGrid::GetDataWidth() const
@@ -243,19 +251,26 @@ void InfiniteGrid::_resize_data(int row, int col, bool stringEmpty)
 		_data_cells[row].erase(col);
 		if (!_data_cells[row].size())
 			_data_cells.erase(row);
-
-		_data_size.SetHeight(_data_cells.rbegin()->first + 1);
-		auto dRow = _data_cells.cbegin();
-		int maxCol = *dRow->second.crbegin(), temp;
-		dRow++;
-		while (dRow != _data_cells.cend())
+		if (_data_cells.size())
 		{
-			temp = *dRow->second.crbegin();
-			if (temp > maxCol)
-				maxCol = temp;
+			_data_size.SetHeight(_data_cells.rbegin()->first + 1);
+			auto dRow = _data_cells.cbegin();
+			int maxCol = *dRow->second.crbegin(), temp;
 			dRow++;
+			while (dRow != _data_cells.cend())
+			{
+				temp = *dRow->second.crbegin();
+				if (temp > maxCol)
+					maxCol = temp;
+				dRow++;
+			}
+			_data_size.SetWidth(maxCol + 1);
 		}
-		_data_size.SetWidth(maxCol + 1);
+		else
+		{
+			_data_size.SetHeight(1);
+			_data_size.SetWidth(1);
+		}
 	}
 }
 

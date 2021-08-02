@@ -41,6 +41,10 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 
 	_grid = new InfiniteGrid(this, idGrid);
 	_grid->SetGridLineColour(wxColour(0, 0, 0));
+	_grid->SelectCell({ 0,0 });
+	_txt_cell->ChangeValue(_grid->GetColLabelValue(0)
+		+ _grid->GetRowLabelValue(0));
+	_grid->SetFocus();
 	
 	_sizer_main = new wxBoxSizer(wxVERTICAL);
 	_sizer_main->Add(_sizer_textctrls, 1, wxEXPAND);
@@ -53,20 +57,19 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	_sizer_panel = new wxBoxSizer(wxHORIZONTAL);
 	_sizer_panel->Add(_panel_main, wxEXPAND);
 	SetSizer(_sizer_panel);
-	_grid->ResizeGrid();
+	//_grid->ResizeGrid();
 	
 	_observer = new CellsObserver(_grid);
 	_info_frame = new FunctionsInfoFrame(this);
-	_f_manager = new GridFileManager(_grid);
+	_file_manager = new GridFileManager(_grid);
 	// for now
-	_f_manager->SetPath("test.grd");
+	_file_manager->SetObserver(_observer);
 }
 
 MainFrame::~MainFrame()
 {
 	delete _observer;
-	delete _f_manager;
-	//delete _info_frame;
+	delete _file_manager;
 	// wxWidgets manages dynamic memory of its visual elements internally
 }
 
@@ -85,48 +88,38 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 	EVT_CLOSE(_on_close)
 wxEND_EVENT_TABLE()
 
-void MainFrame::_on_new_press(wxCommandEvent& e)	// TODO
+void MainFrame::_on_new_press(wxCommandEvent& e)
 {
-	//_grid->ClearGrid();
-	// TODO: make the grid resize itself here
+	if (_file_manager->HasUnsavedChanges())
+		_scenario_unsaved();
+	_init_grid();
+	_set_txt_func(0, 0);
+	_file_manager->DiscardUnsavedChanges();
 	e.Skip();
 }
 
-void MainFrame::_on_open_press(wxCommandEvent& e)	// TODO
+void MainFrame::_on_open_press(wxCommandEvent& e)
 {
-	// open a dialog
-
-	// load the file
-	// _file_path = path
-
+	if (_file_manager->HasUnsavedChanges())
+		_scenario_unsaved();
+	if (_dialog_open_file())
+	{
+		_init_grid();
+		_file_manager->Load();		
+		_set_txt_func(0, 0);
+	}
 	e.Skip();
 }
 
-void MainFrame::_on_save_press(wxCommandEvent& e)	// TODO
+void MainFrame::_on_save_press(wxCommandEvent& e)
 {
-	//if (!_file_path.empty())
-	//{
-	//	// save to path
-	//}
-	//else
-	//{
-	//	// open a dialog
-	//	
-	//	// save to path
-	//}
-
-	// testing =====
-	_f_manager->Save();
-	//=====
+	_scenario_save();
 	e.Skip();
 }
 
-void MainFrame::_on_save_as_press(wxCommandEvent& e)	// TODO
+void MainFrame::_on_save_as_press(wxCommandEvent& e)
 {
-	// open a dialog
-
-	// save to path
-
+	_scenario_save_as();
 	e.Skip();
 }
 
@@ -138,7 +131,7 @@ void MainFrame::_on_quit_press(wxCommandEvent& e)
 
 void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)
 {
-	// decode the the text with lexical analyzer
+	// Âecode the the cell coordinates with lexical analyzer
 	ExprCell cell = LexemParser::ExtractCellId(e.GetString().c_str());
 	_grid->SelectCell({ cell.GetRow(), cell.GetColumn() });
 	_grid->MakeCellVisible(cell.GetRow(), cell.GetColumn());
@@ -166,54 +159,112 @@ void MainFrame::_on_func_txt_changed(wxCommandEvent& e)
 	e.Skip();
 }
 
-void MainFrame::_on_func_txt_enter(wxCommandEvent& e)	// TODO: unfocusing the control doesn't call this method, but it should
+void MainFrame::_on_func_txt_enter(wxCommandEvent& e)
 {
 	const wxGridCellCoords& selected = _grid->GetSelectedCell();
 	_grid->ResizeData(selected.GetRow(), selected.GetCol(), e.GetString());
 	_on_text_entered(_grid->GetSelectedCell());
 	_grid->MakeCellVisible(selected);
-	_grid->SetFocus();	// unfocus the control
+	_grid->SetFocus();
 	e.Skip();
 }
 
 void MainFrame::_on_grid_cell_enter(wxGridEvent& e)
 {
-	_on_text_entered(wxGridCellCoords(e.GetRow(), e.GetCol()));
-	
+	_on_text_entered(wxGridCellCoords(e.GetRow(), e.GetCol()));	
 	e.Skip();
 }
 
-void MainFrame::_on_close(wxCloseEvent& e)	// TODO
+void MainFrame::_on_close(wxCloseEvent& e)
 {
-	// TODO: if the file is not saved ask the user if he's sure
+	if (_file_manager->HasUnsavedChanges())
+		_scenario_unsaved();
 	Destroy();
 }
 
 void MainFrame::_on_cell_selected(wxGridEvent& e)
 {
 	_grid->SelectCell({ e.GetRow(), e.GetCol() });
-	if (_observer->IsCellFunction({ e.GetRow(), e.GetCol() }))
-		_txt_function->ChangeValue(_observer->GetRaw({ e.GetRow(), e.GetCol() }));
-	else
-		_txt_function->ChangeValue(_grid->GetCellValue(e.GetRow(), e.GetCol()));
+	_set_txt_func(e.GetRow(), e.GetCol());
 	const wxGridCellCoords& selected = _grid->GetSelectedCell();
 	_txt_cell->ChangeValue(_grid->GetColLabelValue(selected.GetCol())
 		+ _grid->GetRowLabelValue(selected.GetRow()));
 	e.Skip();
 }
 
-wxString MainFrame::_dialog_open()	// TODO
+bool MainFrame::_dialog_open_file()
 {
-	return wxString();
+	bool pathEntered = false;
+	wxFileDialog
+		openFileDialog(this, _("Open GRD file"), "", "",
+			"GRD files (*.grd)|*.grd", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	if (openFileDialog.ShowModal() == wxID_OK)
+	{
+		pathEntered = true;
+		_file_manager->SetPath(openFileDialog.GetPath().ToStdString());
+	}
+	return pathEntered;
 }
 
-wxString MainFrame::_dialog_save()	// TODO
+bool MainFrame::_dialog_save_file()
 {
-	return wxString();
+	bool pathEntered = false;
+	wxFileDialog
+		saveFileDialog(this, _("Save GRD file"), "", "",
+			"GRD files (*.grd)|*.grd", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+	if (saveFileDialog.ShowModal() == wxID_OK)
+	{
+		pathEntered = true;
+		_file_manager->SetPath(saveFileDialog.GetPath().ToStdString());
+	}
+	return pathEntered;
+}
+
+void MainFrame::_scenario_unsaved()
+{
+	if (wxMessageBox("There are unsaved changes. Would you like to save the file before proceeding?",
+		"Unsaved changes!", wxYES | wxNO | wxCENTRE, this) == wxYES)
+	{
+		_scenario_save();
+	}
+	_file_manager->DiscardUnsavedChanges();
+}
+
+void MainFrame::_scenario_save()
+{
+	if (_file_manager->GetPath().empty())
+		_scenario_save_as();
+	else
+		_file_manager->Save();
+}
+
+void MainFrame::_scenario_save_as()
+{
+	if (_dialog_save_file())
+	{
+		_file_manager->Save();
+	}
 }
 
 void MainFrame::_on_text_entered(wxGridCellCoords cell)
 {
+	_file_manager->UnsavedChanges();
 	_observer->Update(cell);
+}
+
+void MainFrame::_init_grid()
+{
+	_grid->ClearGrid();
+	_observer->Clear();
+	_txt_cell->ChangeValue(_grid->GetColLabelValue(0)
+		+ _grid->GetRowLabelValue(0));
+}
+
+void MainFrame::_set_txt_func(int row, int col)
+{
+	if (_observer->IsCellFunction({ row, col }))
+		_txt_function->ChangeValue(_observer->GetRaw({ row,col }));
+	else
+		_txt_function->ChangeValue(_grid->GetCellValue(row, col));
 }
 

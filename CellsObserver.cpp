@@ -3,6 +3,11 @@
 CellsObserver::CellsObserver(wxGrid* grid) : _grid(grid)
 {}
 
+CellsObserver::~CellsObserver()
+{
+	_clear_funcs();
+}
+
 void CellsObserver::_add_cell(const wxGridCellCoords& cell)
 {
 	int c = cell.GetCol(), r = cell.GetRow();
@@ -43,6 +48,17 @@ void CellsObserver::_remove_cell(const wxGridCellCoords& cell)
 		_cells_funcs.erase(cell.GetRow());
 }
 
+void CellsObserver::_clear_funcs()
+{
+	for (auto r : _cells_funcs)
+	{
+		for (auto c : r.second)
+			delete c.second;
+		r.second.clear();
+	}
+	_cells_funcs.clear();
+}
+
 void CellsObserver::Update(const wxGridCellCoords& cell)
 {
 	const wxString& cellText = _grid->GetCellValue(cell);
@@ -67,6 +83,13 @@ void CellsObserver::Update(const wxGridCellCoords& cell)
 		_update_dependencies(cell);
 }
 
+void CellsObserver::Clear()
+{
+	_clear_funcs();
+	_cells_dependencies.clear();
+	_cyclic_cells.clear();
+}
+
 std::string CellsObserver::GetValue(const wxGridCellCoords& cell)
 {
 	return _cells_funcs[cell.GetRow()][cell.GetCol()]->GetResult();
@@ -82,7 +105,7 @@ void CellsObserver::_add_dependencies(const wxGridCellCoords& cell)
 	int r = cell.GetRow(), c = cell.GetCol();
 	const std::list<wxGridCellCoords>& funcDeps = _cells_funcs[r][c]->GetDependencies();
 	int depRow = 0, depCol = 0;
-	// Iterate through cells that the func is dependent on. TODO: account for possible dependencies cycles
+	// Iterate through cells that the func is dependent on. 
 	for (auto i = funcDeps.cbegin(); i != funcDeps.cend(); i++)
 	{
 		depRow = i->GetRow();

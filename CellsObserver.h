@@ -6,8 +6,11 @@ class CellsObserver
 {
 public:
 	CellsObserver(wxGrid* grid);
+	~CellsObserver();
 	// Updates the grid based on the changed value of the given cell
 	void Update(const wxGridCellCoords& cell);
+
+	void Clear();
 	// Checks if the cell is a function
 	bool IsCellFunction(const wxGridCellCoords& cell);
 	// Returns calculated function value
@@ -19,6 +22,8 @@ private:
 	void _add_cell(const wxGridCellCoords& cell);
 	// Removes a cell from currently observed
 	void _remove_cell(const wxGridCellCoords& cell);
+
+	void _clear_funcs();
 
 	// First key is row, second is column
 	std::map<int, std::map<int, CellFunction*>> _cells_funcs;

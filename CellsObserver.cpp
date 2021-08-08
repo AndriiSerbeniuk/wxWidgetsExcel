@@ -90,14 +90,23 @@ void CellsObserver::Clear()
 	_cyclic_cells.clear();
 }
 
-std::string CellsObserver::GetValue(const wxGridCellCoords& cell)
+std::string CellsObserver::GetValue(const wxGridCellCoords& cell) const
 {
-	return _cells_funcs[cell.GetRow()][cell.GetCol()]->GetResult();
+	return _cells_funcs.at(cell.GetRow()).at(cell.GetCol())->GetResult();
 }
 
-std::string CellsObserver::GetRaw(const wxGridCellCoords& cell)
+std::string CellsObserver::GetRaw(const wxGridCellCoords& cell) const
 {
-	return _cells_funcs[cell.GetRow()][cell.GetCol()]->GetFuncText();
+	return _cells_funcs.at(cell.GetRow()).at(cell.GetCol())->GetFuncText();
+}
+
+std::list<Lexem> CellsObserver::GetLexems(const wxGridCellCoords& cell) const
+{
+	if (IsCellFunction(cell))
+		return _cells_funcs.at(cell.GetRow()).at(cell.GetCol())->GetLexems();
+	else
+		return std::list<Lexem>();
+	
 }
 
 void CellsObserver::_add_dependencies(const wxGridCellCoords& cell)
@@ -224,9 +233,9 @@ bool CellsObserver::_is_marked_cyclic(const wxGridCellCoords& cell)
 		_cyclic_cells[cell.GetRow()].count(cell.GetCol());
 }
 
-bool CellsObserver::IsCellFunction(const wxGridCellCoords& cell)
+bool CellsObserver::IsCellFunction(const wxGridCellCoords& cell) const
 {
-	if (_cells_funcs.count(cell.GetRow()) && _cells_funcs[cell.GetRow()].count(cell.GetCol()))
+	if (_cells_funcs.count(cell.GetRow()) && _cells_funcs.at(cell.GetRow()).count(cell.GetCol()))
 		return true;
 	return false;
 }

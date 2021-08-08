@@ -5,6 +5,7 @@
 #include "CellsObserver.h"
 #include "FunctionsInfoFrame.h"
 #include "GridFileManager.h"
+#include "LexemHighlighter.h"
 
 class MainFrame : public wxFrame
 {
@@ -50,6 +51,7 @@ private:
 	CellsObserver* _observer;
 	FunctionsInfoFrame* _info_frame;
 	GridFileManager* _file_manager;
+	LexemHighlighter* _hlighter;
 
 	// Events
 	wxDECLARE_EVENT_TABLE();

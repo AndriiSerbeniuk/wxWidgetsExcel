@@ -2,12 +2,12 @@
 #include "ExpressionBase.h"
 
 // Base class for expression types with two arguments
-class TwoArgExpression : public ExpressionBase
+class TwoArgBase : public ExpressionBase
 {
 public:
-	TwoArgExpression();
-	TwoArgExpression(ExpressionBase* nested1, ExpressionBase* nested2);
-	virtual ~TwoArgExpression();
+	TwoArgBase();
+	TwoArgBase(ExpressionBase* nested1, ExpressionBase* nested2);
+	virtual ~TwoArgBase();
 	// Calculate the value of the expression
 	virtual double Calculate();
 

@@ -16,7 +16,9 @@ public:
 	std::string GetResult() const;
 	// Gets raw function text
 	std::string GetFuncText() const;
-	// Returns a list of cells? which this functions uses in its calculation
+
+	std::list<Lexem> GetLexems() const;
+	// Returns a list of cells, which this functions uses in its calculation
 	const std::list<wxGridCellCoords>& GetDependencies() const;
 	// Calculate value of the function
 	void Calculate();

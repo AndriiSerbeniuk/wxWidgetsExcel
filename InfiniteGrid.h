@@ -24,9 +24,9 @@ public:
 	void MakeCellVisible(const wxGridCellCoords& cell);
 	void MakeCellVisible(int row, int col);
 	void ClearGrid();
-	// Returns width of grid area that contains data, starting ar (0;0)
+	// Returns width of grid area that contains data, starting at (0;0)
 	int GetDataWidth() const;
-	// Returns height of grid area that contains data, starting ar (0;0)
+	// Returns height of grid area that contains data, starting at (0;0)
 	int GetDataHeight() const;
 
 private:

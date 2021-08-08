@@ -68,8 +68,6 @@ public:
 	Lexem(eLexemType type, int value);
 	Lexem(const Lexem& other);
 
-	
-
 	bool operator == (const Lexem& other);
 	bool operator != (const Lexem& other);
 private:

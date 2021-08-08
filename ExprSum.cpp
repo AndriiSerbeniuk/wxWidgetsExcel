@@ -1,7 +1,7 @@
 #include "ExprSum.h"
 
 ExprSum::ExprSum(ExpressionBase* expr1, ExpressionBase* expr2)
-	: TwoArgExpression(expr1, expr2)
+	: TwoArgBase(expr1, expr2)
 {}
 
 ExprSum::~ExprSum()

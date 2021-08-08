@@ -96,7 +96,7 @@
     <ClInclude Include="FuncBase.h">
       <Filter>Header Files\CellFunctions\Expressions</Filter>
     </ClInclude>
-    <ClInclude Include="TwoArgExpression.h">
+    <ClInclude Include="TwoArgBase.h">
       <Filter>Header Files\CellFunctions\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="FuncAvg.h">
@@ -128,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="GridFileManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LexemHighlighter.h">
+      <Filter>Header Files\Visuals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +167,7 @@
     <ClCompile Include="FuncBase.cpp">
       <Filter>Source Files\CellFunctions\Expressions</Filter>
     </ClCompile>
-    <ClCompile Include="TwoArgExpression.cpp">
+    <ClCompile Include="TwoArgBase.cpp">
       <Filter>Source Files\CellFunctions\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ExpressionBase.cpp">
@@ -179,9 +182,6 @@
     <ClCompile Include="ExprDiv.cpp">
       <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
     </ClCompile>
-    <ClCompile Include="ExprFormer.cpp">
-      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
-    </ClCompile>
     <ClCompile Include="ExprMul.cpp">
       <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
     </ClCompile>
@@ -190,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="ExprSubtract.cpp">
       <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
-    </ClCompile>
-    <ClCompile Include="ExprSum.cpp">
-      <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
     </ClCompile>
     <ClCompile Include="FuncAvg.cpp">
       <Filter>Source Files\CellFunctions\Expressions\Functions</Filter>
@@ -217,6 +214,15 @@
     </ClCompile>
     <ClCompile Include="GridFileManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprSum.cpp">
+      <Filter>Source Files\CellFunctions\Expressions\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="ExprFormer.cpp">
+      <Filter>Source Files\CellFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="LexemHighlighter.cpp">
+      <Filter>Source Files\Visuals</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

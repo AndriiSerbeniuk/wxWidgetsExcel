@@ -12,11 +12,13 @@ public:
 
 	void Clear();
 	// Checks if the cell is a function
-	bool IsCellFunction(const wxGridCellCoords& cell);
+	bool IsCellFunction(const wxGridCellCoords& cell) const;
 	// Returns calculated function value
-	std::string GetValue(const wxGridCellCoords& cell);
+	std::string GetValue(const wxGridCellCoords& cell) const;
 	// Returns function text
-	std::string GetRaw(const wxGridCellCoords& cell);
+	std::string GetRaw(const wxGridCellCoords& cell) const;
+
+	std::list<Lexem> GetLexems(const wxGridCellCoords& cell) const;
 private:
 	// Adds a cell to be observed
 	void _add_cell(const wxGridCellCoords& cell);

@@ -28,12 +28,6 @@ ExpressionBase* ExprFormer::Form(std::list<Lexem> lexems,
 			}
 		}
 	}
-	
-	// form * and /
-
-	// form ()
-
-	// form functions
 
 	return retVal;
 }
@@ -52,9 +46,9 @@ ExpressionBase* ExprFormer::_form_parentheses(std::list<Lexem> lexems, const Lit
 	return res;
 }
 
-TwoArgExpression* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
+TwoArgBase* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
 {
-	TwoArgExpression* res = nullptr;
+	TwoArgBase* res = nullptr;
 	// Find first + or - on this depth (not in parentheses or in a function)
 	int parenthesesFound = 0;
 	for (auto i = lexems.begin(); i != lexems.end() && !res; i++)
@@ -95,9 +89,9 @@ TwoArgExpression* ExprFormer::_form_sum_or_subtract(std::list<Lexem> lexems, con
 	return res;
 }
 
-TwoArgExpression* ExprFormer::_form_mul_or_div(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
+TwoArgBase* ExprFormer::_form_mul_or_div(std::list<Lexem> lexems, const LiteralsContainer& literals, const wxGrid* grid)
 {
-	TwoArgExpression* res = nullptr;
+	TwoArgBase* res = nullptr;
 	// Find first * or / on this depth (not in parentheses or in a function)
 	int parenthesesFound = 0;
 	for (auto i = lexems.begin(); i != lexems.end() && !res; i++)

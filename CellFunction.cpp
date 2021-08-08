@@ -28,6 +28,11 @@ std::string CellFunction::GetFuncText() const
 	return _parser.GetText();
 }
 
+std::list<Lexem> CellFunction::GetLexems() const
+{
+	return _parser.GetParsed();
+}
+
 const std::list<wxGridCellCoords>& CellFunction::GetDependencies() const
 {
 	return _dependencies;

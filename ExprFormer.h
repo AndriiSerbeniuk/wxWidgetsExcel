@@ -29,10 +29,10 @@ private:
 	static ExpressionBase* _form_parentheses(std::list<Lexem> lexems,
 		const LiteralsContainer& literals, const wxGrid* grid);
 	// Creates a + or - expression
-	static TwoArgExpression* _form_sum_or_subtract(std::list<Lexem> lexems,
+	static TwoArgBase* _form_sum_or_subtract(std::list<Lexem> lexems,
 		const LiteralsContainer& literals, const wxGrid* grid);
 	// Creates a * or / expression
-	static TwoArgExpression* _form_mul_or_div(std::list<Lexem> lexems,
+	static TwoArgBase* _form_mul_or_div(std::list<Lexem> lexems,
 		const LiteralsContainer& literals, const wxGrid* grid);
 	// Creates function expression
 	static FuncBase* _form_func(std::list<Lexem> lexems,

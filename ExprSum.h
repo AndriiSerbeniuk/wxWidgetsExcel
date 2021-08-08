@@ -1,8 +1,8 @@
 #pragma once
-#include "TwoArgExpression.h"
+#include "TwoArgBase.h"
 
 // Addition expression
-class ExprSum : public TwoArgExpression
+class ExprSum : public TwoArgBase
 {
 public:
 	ExprSum(ExpressionBase* expr1, ExpressionBase* expr2);

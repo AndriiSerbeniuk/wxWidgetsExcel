@@ -1,8 +1,8 @@
 #pragma once
-#include "TwoArgExpression.h"
+#include "TwoArgBase.h"
 
 // Subtraction expression
-class ExprSubtract : public TwoArgExpression
+class ExprSubtract : public TwoArgBase
 {
 public:
 	ExprSubtract(ExpressionBase* expr1, ExpressionBase* expr2);

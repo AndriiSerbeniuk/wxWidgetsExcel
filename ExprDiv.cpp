@@ -1,7 +1,7 @@
 #include "ExprDiv.h"
 
 ExprDiv::ExprDiv(ExpressionBase* expr1, ExpressionBase* expr2)
-    : TwoArgExpression(expr1, expr2)
+    : TwoArgBase(expr1, expr2)
 {}
 
 ExprDiv::~ExprDiv()

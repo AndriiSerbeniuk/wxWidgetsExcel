@@ -1,8 +1,8 @@
 #pragma once
-#include "TwoArgExpression.h"
+#include "TwoArgBase.h"
 
 // Multiplication expression
-class ExprMul : public TwoArgExpression
+class ExprMul : public TwoArgBase
 {
 public:
 	ExprMul(ExpressionBase* expr1, ExpressionBase* expr2);

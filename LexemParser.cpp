@@ -254,7 +254,9 @@ void LexemParser::_form_cell_selections()
 			ExprCell& c2 = _literals.Cells[next->Value];
 			_literals.Selections.push_back({ c1.GetRow(), c1.GetColumn(), c2.GetRow(), c2.GetColumn() });
 			// Insert selection lexem before first cell lexem
-			_parsed.insert(prev, Lexem({ kCellSelection, static_cast<int>(_literals.Selections.size() - 1) }));
+			auto inserted = _parsed.insert(prev, Lexem({ kCellSelection, static_cast<int>(_literals.Selections.size() - 1) }));
+			inserted->StartInd = prev->StartInd;
+			inserted->EndInd = next->EndInd;
 			// Erase cell:cell. Next point to the lexem after selection
 			next = _parsed.erase(prev, ++next);
 		}

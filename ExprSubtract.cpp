@@ -1,7 +1,7 @@
 #include "ExprSubtract.h"
 
 ExprSubtract::ExprSubtract(ExpressionBase* expr1, ExpressionBase* expr2)
-    : TwoArgExpression(expr1, expr2)
+    : TwoArgBase(expr1, expr2)
 {}
 
 ExprSubtract::~ExprSubtract()

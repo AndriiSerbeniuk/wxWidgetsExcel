@@ -1,7 +1,7 @@
 #include "ExprMul.h"
 
 ExprMul::ExprMul(ExpressionBase* expr1, ExpressionBase* expr2)
-    : TwoArgExpression(expr1, expr2), _direct_value(nullptr)
+    : TwoArgBase(expr1, expr2), _direct_value(nullptr)
 {}
 
 ExprMul::ExprMul(double value, ExpressionBase* expr)

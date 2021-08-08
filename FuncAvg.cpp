@@ -24,5 +24,5 @@ double FuncAvg::Calculate()
 		}
 	}
 
-    return FuncSum::Calculate() / valCount;
+	return FuncSum::Calculate() / valCount;
 }

@@ -41,11 +41,12 @@
     <ClInclude Include="GrammarChecker.h" />
     <ClInclude Include="GridFileManager.h" />
     <ClInclude Include="InfiniteGrid.h" />
+    <ClInclude Include="LexemHighlighter.h" />
     <ClInclude Include="LexemParser.h" />
     <ClInclude Include="Lexem.h" />
     <ClInclude Include="LiteralsContainer.h" />
     <ClInclude Include="MainFrame.h" />
-    <ClInclude Include="TwoArgExpression.h" />
+    <ClInclude Include="TwoArgBase.h" />
     <ClInclude Include="wxExcel.h" />
   </ItemGroup>
   <ItemGroup>
@@ -71,12 +72,13 @@
     <ClCompile Include="GrammarChecker.cpp" />
     <ClCompile Include="GridFileManager.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
+    <ClCompile Include="LexemHighlighter.cpp" />
     <ClCompile Include="LexemParser.cpp" />
     <ClCompile Include="Lexem.cpp" />
     <ClCompile Include="LexParsingConsts.cpp" />
     <ClCompile Include="LiteralsContainer.cpp" />
     <ClCompile Include="MainFrame.cpp" />
-    <ClCompile Include="TwoArgExpression.cpp" />
+    <ClCompile Include="TwoArgBase.cpp" />
     <ClCompile Include="wxExcel.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

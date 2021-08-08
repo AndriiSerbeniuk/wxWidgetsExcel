@@ -32,7 +32,7 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	_bttn_func_help = new wxButton(this, idBttnHelp, "f(x)", wxDefaultPosition, wxSize(rowHeight, rowHeight));
 	_bttn_func_help->SetFont(wxFont(9, wxFontFamily::wxFONTFAMILY_DECORATIVE,
 		wxFontStyle::wxFONTSTYLE_ITALIC, wxFontWeight::wxFONTWEIGHT_LIGHT));
-	_txt_function = new wxTextCtrl(this, idTxtFunction, "", wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	_txt_function = new wxTextCtrl(this, idTxtFunction, "", wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RICH);
 	
 	_sizer_textctrls = new wxBoxSizer(wxHORIZONTAL);
 	_sizer_textctrls->Add(_txt_cell, 1, wxCENTER);
@@ -57,19 +57,20 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "wxExcel")
 	_sizer_panel = new wxBoxSizer(wxHORIZONTAL);
 	_sizer_panel->Add(_panel_main, wxEXPAND);
 	SetSizer(_sizer_panel);
-	//_grid->ResizeGrid();
 	
 	_observer = new CellsObserver(_grid);
 	_info_frame = new FunctionsInfoFrame(this);
 	_file_manager = new GridFileManager(_grid);
-	// for now
 	_file_manager->SetObserver(_observer);
+
+	_hlighter = new LexemHighlighter(_txt_function);
 }
 
 MainFrame::~MainFrame()
 {
 	delete _observer;
 	delete _file_manager;
+	delete _hlighter;
 	// wxWidgets manages dynamic memory of its visual elements internally
 }
 
@@ -133,8 +134,11 @@ void MainFrame::_on_cell_txt_enter(wxCommandEvent& e)
 {
 	// Âecode the the cell coordinates with lexical analyzer
 	ExprCell cell = LexemParser::ExtractCellId(e.GetString().c_str());
-	_grid->SelectCell({ cell.GetRow(), cell.GetColumn() });
-	_grid->MakeCellVisible(cell.GetRow(), cell.GetColumn());
+	if (cell.GetRow() != -1 && cell.GetColumn() != -1)
+	{
+		_grid->SelectCell({ cell.GetRow(), cell.GetColumn() });
+		_grid->MakeCellVisible(cell.GetRow(), cell.GetColumn());
+	}
 	_grid->SetFocus();	// Focus the grid
 	e.Skip();
 }
@@ -150,12 +154,14 @@ void MainFrame::_on_func_help_press(wxCommandEvent& e)
 	{
 		_info_frame->Show();
 	}
+	
 	e.Skip();
 }
 
 void MainFrame::_on_func_txt_changed(wxCommandEvent& e)
 {
-	_grid->SetCellValue(_grid->GetSelectedCell(), _txt_function->GetValue());
+	if (!_hlighter->IsActive())
+		_grid->SetCellValue(_grid->GetSelectedCell(), _txt_function->GetValue());
 	e.Skip();
 }
 
@@ -189,6 +195,7 @@ void MainFrame::_on_cell_selected(wxGridEvent& e)
 	const wxGridCellCoords& selected = _grid->GetSelectedCell();
 	_txt_cell->ChangeValue(_grid->GetColLabelValue(selected.GetCol())
 		+ _grid->GetRowLabelValue(selected.GetRow()));
+
 	e.Skip();
 }
 
@@ -250,6 +257,7 @@ void MainFrame::_on_text_entered(wxGridCellCoords cell)
 {
 	_file_manager->UnsavedChanges();
 	_observer->Update(cell);
+	_hlighter->Update(_observer->GetLexems(cell));
 }
 
 void MainFrame::_init_grid()
@@ -263,7 +271,10 @@ void MainFrame::_init_grid()
 void MainFrame::_set_txt_func(int row, int col)
 {
 	if (_observer->IsCellFunction({ row, col }))
+	{
 		_txt_function->ChangeValue(_observer->GetRaw({ row,col }));
+		_hlighter->Update(_observer->GetLexems({ row,col }));
+	}
 	else
 		_txt_function->ChangeValue(_grid->GetCellValue(row, col));
 }

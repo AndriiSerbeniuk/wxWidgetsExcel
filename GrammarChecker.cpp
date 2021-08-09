@@ -8,7 +8,7 @@ GrammarChecker::GState::GState(const std::vector<Lexem>& values, int transition,
 	Values.assign(values.cbegin(), values.cend());
 }
 
-bool GrammarChecker::Run(std::list<Lexem> lexems)
+bool GrammarChecker::Run(std::list<Lexem>& lexems)
 {
 	if (!lexems.size())
 		return false;
@@ -77,6 +77,11 @@ bool GrammarChecker::Run(std::list<Lexem> lexems)
 	}
 	if (clear)
 		delete lexem;
+	else
+	{
+		lexem->Type = kError;
+		result = false;
+	}
 	return result;
 }
 

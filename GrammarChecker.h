@@ -8,7 +8,7 @@
 class GrammarChecker
 {
 public:
-	static bool Run(std::list<Lexem> lexems);
+	static bool Run(std::list<Lexem>& lexems);
 
 private:
 	// State of LL(1) grammar

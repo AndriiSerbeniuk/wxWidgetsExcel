@@ -60,19 +60,19 @@ bool GridFileManager::Load()
 	FILE* in;
 	if ((in = fopen(_file_path.c_str(), "rb")) == NULL)
 		return false;
-	int dWidth = 0, dHeight = 0;
+	unsigned int dWidth = 0, dHeight = 0;
 	fread(&dWidth, sizeof(dWidth), 1, in);
 	fread(&dHeight, sizeof(dWidth), 1, in);
-	if (dWidth < 1 || dHeight < 1)
-	{
-		fclose(in);
-		return false;
-	}
 	fpos_t start, end;
 	fgetpos(in, &start);
 	fseek(in, 0, SEEK_END);
 	fgetpos(in, &end);
-	int dataSize = end - start;
+	unsigned int dataSize = end - start;
+	if (dWidth < 1 || dHeight < 1 || dataSize < dWidth * dHeight)
+	{
+		fclose(in);
+		return false;
+	}
 	fsetpos(in, &start);
 	char* value = new char[dataSize];	
 	for (int r = 0; r < dHeight; r++)

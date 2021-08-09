@@ -17,6 +17,7 @@ public:
 	// Get text
 	std::string GetText() const;
 	// Returns extracted lexems
+	std::list<Lexem>& GetParsed();
 	std::list<Lexem> GetParsed() const;
 	// Returns extracted literals
 	LiteralsContainer& GetLiterals();

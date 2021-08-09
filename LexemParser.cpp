@@ -55,9 +55,14 @@ std::string LexemParser::GetText() const
 	return _raw;
 }
 
-std::list<Lexem> LexemParser::GetParsed() const
+std::list<Lexem>& LexemParser::GetParsed()
 {
 	return _parsed;
+}
+
+std::list<Lexem> LexemParser::GetParsed() const
+{
+	return  _parsed;
 }
 
 LiteralsContainer& LexemParser::GetLiterals()
